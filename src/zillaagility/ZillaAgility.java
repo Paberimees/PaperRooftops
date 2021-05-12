@@ -7,6 +7,7 @@ import zillaagility.tasks.*;
 import zillaagility.utility.courses.AlKharidRooftop;
 import zillaagility.utility.courses.Course;
 import zillaagility.utility.courses.DraynorRooftop;
+import zillaagility.utility.courses.VarrockRooftop;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,7 +18,8 @@ public class ZillaAgility extends PollingScript<ClientContext> {
 
     private List<Task> taskList = new ArrayList<>();
     //public Course course = new DraynorRooftop();
-    public Course course = new AlKharidRooftop();
+    //public Course course = new AlKharidRooftop();
+    public Course course = new VarrockRooftop();
 
     //todo make it eat food if it's low, log out if low and no food
     @Override
@@ -25,6 +27,7 @@ public class ZillaAgility extends PollingScript<ClientContext> {
         //Disables random events
         ctx.properties.setProperty("randomevents.disable", "true");
         //Adds tasks for the bot to do
+        taskList.add(new CloseMenu(ctx, this));
         taskList.add(new TurnOnRun(ctx, this));
         taskList.add(new PickUpMarkOfGrace(ctx, this));
         taskList.add(new InteractObstacle(ctx, this));

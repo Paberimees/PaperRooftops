@@ -36,18 +36,6 @@ public class AlKharidRooftop extends Course {
         trackList.add(new Obstacle("Jump", "Gap", new int[]{-16, 16, -48, -16, -16, 16},
                 new Area(new Tile(3295, 3196,3), new Tile(3307, 3183, 3))));
 
-        /*
-        Area[] area = {
-    new Area(3270, 3195, 3278, 3199),
-    new Area(3270, 3193, 3278, 3180, 3), f
-    new Area(3264, 3174, 3273, 3160, 3),f
-    new Area(3281, 3177, 3303, 3159, 3),f
-    new Area(3312, 3166, 3319, 3159, 2),f
-    new Area(3311, 3180, 3319, 3172, 2),f
-    new Area(3311, 3187, 3319, 3179, 3),
-    new Area(3295, 3196, 3307, 3183, 3)
-};
-         */
     }
 
     @Override
