@@ -42,6 +42,9 @@ public class InteractObstacle extends Task<ClientContext> {
                     }
                     return obj.name().equals(currentObstacle.getName()) && obj.id() == currentObstacle.getId();
                 }).nearest().first();
+
+        main.currentGameObject = currentObstacleObject;
+
         //GameObject currentObstacleObject = ctx.objects.toStream().name(currentObstacle.getName()).nearest().first();
         /*GameObject currentObstacleObject = ctx.objects.toStream().filter((obj)->obj.name().equals(currentObstacle.getName())
                 && ctx.movement.reachable(new Tile(
@@ -54,14 +57,16 @@ public class InteractObstacle extends Task<ClientContext> {
 
         //GameObject currentObstacleObject = ctx.objects.toStream().filter(obj->obj.name().equals("Rough wall") && ctx.movement.reachable(obj.tile(), playerTile)).nearest().first();
 
-
         if (!currentObstacleObject.valid()) {
             System.out.println("[ERROR] : Current obstacle was not valid! Trying again.../Skipping...");
             main.course.nextObstacle();
             return;
         }
 
+        System.out.println("[LOG] : GameObject: " + currentObstacleObject.name() + " " + currentObstacleObject.id());
+
         //todo sometimes misclicks, because currentObstacle is too far away? Unsure why; mostly happened on varrock jumpgap house. Add distance checking just in case?
+        //todo this might need webwwalker
         currentObstacleObject.bounds(currentObstacle.getBounds());
         if (!currentObstacleObject.inViewport()) {
             System.out.println("[LOG] : Current obstacle was not in viewport. Moving and returning...");
@@ -94,7 +99,17 @@ public class InteractObstacle extends Task<ClientContext> {
         }, 1000, 10);
 
         //Because sometimes it fails and kills webwalker otherwise, gets player coords -1-1-1
-        Condition.sleep(1000);
+        //Condition.sleep(1000); //todo replace this sleep with tile -1 -1 -1 check???
+
+        if (currentObstacle.getStartArea().containsOrIntersects(ctx.players.local().tile())) {
+            System.out.println("[ERROR] : Something is fucked and bricked the script. Not sure what. Trying to webwalk to obstacle.");
+            ctx.movement.step(currentObstacle.getStartArea().getRandomTile());
+            //webwalker can bugger off for now, using random tile as a reset
+            //ctx.movement.moveTo(currentObstacleObject, false, false);
+            //camera turning didnt work, but fuck it.
+            //ctx.camera.angleTo((int)(Math.random()*(360)));
+            //ctx.camera.turnTo(currentObstacleObject);
+        }
 
         main.course.nextObstacle();
     }

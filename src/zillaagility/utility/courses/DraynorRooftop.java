@@ -16,8 +16,8 @@ public class DraynorRooftop extends Course {
     private List<Obstacle> trackList = new ArrayList<>();
 
     public DraynorRooftop() {
-        courseName = "Al-kharid rooftop";
-        levelRequirement = 20;
+        courseName = "Draynor rooftop";
+        levelRequirement = 10;
         iterator = 0;
         //Adding all the course obstacles one by one.
         trackList.add(new Obstacle("Climb",

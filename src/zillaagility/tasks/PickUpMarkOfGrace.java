@@ -37,6 +37,7 @@ public class PickUpMarkOfGrace extends Task<ClientContext> {
     public void execute() {
         System.out.println("[TASK] : PickUpMarkOfGrace");
         GroundItem markOfGrace = ctx.groundItems.toStream().name("Mark of grace").nearest().first();
+        main.currentMarkOfGrace = markOfGrace;
         final long markOfGraceCount = ctx.inventory.toStream().name("Mark of grace").count(true);
         if (!markOfGrace.inViewport()) {
             System.out.println("[LOG] : Mark of grace wasn't in viewport. Moving and trying again...");
@@ -50,7 +51,14 @@ public class PickUpMarkOfGrace extends Task<ClientContext> {
             }, 1000, 10);
             return;
         }
+        //New bounds due to misclicking bug.
+        if (markOfGrace.tile().floor() == 2) {
+            markOfGrace.bounds(new int[]{-4, 4, -144, -140, -4, 4});
+        } else {
+            markOfGrace.bounds(new int[]{-4, 4, -4, 0, -4, 4});
+        }
         markOfGrace.interact("Take", "Mark of grace");
+        //markOfGrace.click(true);
         Condition.wait(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
