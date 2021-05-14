@@ -36,6 +36,7 @@ public class ZillaAgility extends PollingScript<ClientContext> implements PaintL
         ctx.properties.setProperty("randomevents.disable", "true");
         //Adds tasks for the bot to do
 
+        
         taskList.add(new CheckHealth(ctx, this));
         taskList.add(new CloseMenu(ctx, this));
         taskList.add(new TurnOnRun(ctx, this));

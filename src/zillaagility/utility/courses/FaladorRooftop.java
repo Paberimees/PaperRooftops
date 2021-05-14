@@ -27,10 +27,14 @@ public class FaladorRooftop extends Course {
         int[] tightRopeBounds3 = {-16, 16, -96, -92, -16, 16};
         int[] tightRopeBounds3_bugged = {-16, 16, -96, -92, -16, 16};
         int[] defaultBounds3 = {-8, 8, -40, -24, -8, 8};
-        int[] defaultBounds3_handholds = {-8, 8, -40, 48, -8, 8}; //for viewport easeness
+        int[] defaultBounds3_bugged_gap = {-8, 8, 320, 328, -8, 8};
+
+        int[] defaultBounds3_handholds = {-8, 8, 310, 318, -128, -136}; //for viewport easeness
+
         int[] defaultBounds3_ledges = {-8, 8, -256, -244, -8, 8};
         int[] defaultBounds3_ledges_third_littlebitlower = {-8, 8, -224, -220, -8, 8};
         int[] defaultBounds3_ledges_lower = {-8, 8, 32, 24, -8, 8};
+        int[] defaultBounds3_ledges_lower_bugged = {-8, 8, -72, -64, -8, 8};
         int[] defaultBounds3_gap_lower_y = {-8, 8, 0, 24, -8, 8};
 
 
@@ -66,7 +70,7 @@ public class FaladorRooftop extends Course {
                 new Area(new Tile(3025, 3356,3), new Tile(3030, 3351, 3)))); //3
         trackList.add(new Obstacle("Jump",
                 "Gap",
-                defaultBounds3,
+                defaultBounds3_bugged_gap,
                 new Area(new Tile(3008, 3359,3), new Tile(3022, 3352, 3)))); //3
         trackList.add(new Obstacle("Jump", //wow these ledge bounds are fucked
                 "Ledge",
@@ -85,7 +89,7 @@ public class FaladorRooftop extends Course {
                 14922)); //3
         trackList.add(new Obstacle("Jump",
                 "Ledge",
-                defaultBounds3_ledges_lower,
+                defaultBounds3_ledges_lower_bugged,
                 new Area(new Tile(3011, 3334,3), new Tile(3018, 3331, 3)),
                 14924)); //3
         trackList.add(new Obstacle("Jump",
