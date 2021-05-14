@@ -7,6 +7,7 @@ import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.GameObject;
 import org.powerbot.script.rt4.GroundItem;
 import zillaagility.tasks.*;
+import zillaagility.utility.GC;
 import zillaagility.utility.courses.*;
 
 import java.awt.*;
@@ -20,31 +21,36 @@ public class ZillaAgility extends PollingScript<ClientContext> implements PaintL
     //public Course course = new DraynorRooftop();
     //public Course course = new AlKharidRooftop();
     //public Course course = new VarrockRooftop();
-    public Course course = new CanifisRooftop();
+    //public Course course = new CanifisRooftop();
+    public Course course = new FaladorRooftop();
     public GameObject currentGameObject;
     public GroundItem currentMarkOfGrace;
 
     //todo make it eat food if it's low, log out if low and no food
     //todo fix course marks
     //todo add autocorrector
+    //todo viewport should zoom out if neccessary
     @Override
     public void start() {
         //Disables random events
         ctx.properties.setProperty("randomevents.disable", "true");
         //Adds tasks for the bot to do
+
         taskList.add(new CheckHealth(ctx, this));
         taskList.add(new CloseMenu(ctx, this));
         taskList.add(new TurnOnRun(ctx, this));
         taskList.add(new PickUpMarkOfGrace(ctx, this));
         taskList.add(new InteractObstacle(ctx, this));
         taskList.add(new GoToStart(ctx, this));
+
+
         //taskList.add(new DebugTask(ctx, this));
     }
 
     @Override
     public void poll() {
         //System.out.println(course.getCurrentObstacle(ctx.players.local().tile()));
-        System.out.println("POLL!!!");
+        System.out.println("POLL | Total failed clicks: " + GC.TOTAL_FAILED_CLICKS + " | Obstacles failed in order: " + GC.FAILED_OBSTACLES);
         for (Task t : taskList) {
             if (t.activate()) {
                 t.execute();

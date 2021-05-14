@@ -19,6 +19,7 @@ public class AlKharidRooftop extends Course {
         levelRequirement = 20;
         iterator = 0;
         //Adding all the course obstacles one by one.
+        //todo check floors 1 and 2 for mark of grace pickup, could be fucked.
         trackList.add(new Obstacle("Climb", "Rough wall", new int[]{-12,16,-172,-132,-60, -56},
                 new Area(new Tile(3270, 3195, 0), new Tile(3278, 3199,0))));
         trackList.add(new Obstacle("Cross", "Tightrope", new int[]{-16, 16, -4, 0, -16, 16},

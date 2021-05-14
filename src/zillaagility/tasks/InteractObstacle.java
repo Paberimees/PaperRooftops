@@ -7,6 +7,7 @@ import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.GameObject;
 import zillaagility.ZillaAgility;
+import zillaagility.utility.GC;
 import zillaagility.utility.courses.Course;
 import zillaagility.utility.courses.Obstacle;
 
@@ -102,13 +103,21 @@ public class InteractObstacle extends Task<ClientContext> {
         //Condition.sleep(1000); //todo replace this sleep with tile -1 -1 -1 check???
 
         if (currentObstacle.getStartArea().containsOrIntersects(ctx.players.local().tile())) {
-            System.out.println("[ERROR] : Something is fucked and bricked the script. Not sure what. Trying to webwalk to obstacle.");
-            ctx.movement.step(currentObstacle.getStartArea().getRandomTile());
+            System.out.println("[ERROR] : Obstacle failed! Adding +1...");
+            GC.FAILED_ATTEMPTS += 1;
+            GC.TOTAL_FAILED_CLICKS += 1;
+            GC.FAILED_OBSTACLES.add(currentObstacle.getName());
+            if (GC.FAILED_ATTEMPTS >= 3) {
+                System.out.println("[ERROR] : Something is fucked and bricked the script. Not sure what. Trying to webwalk to obstacle.");
+                ctx.movement.step(currentObstacle.getStartArea().getRandomTile());
+            }
             //webwalker can bugger off for now, using random tile as a reset
             //ctx.movement.moveTo(currentObstacleObject, false, false);
             //camera turning didnt work, but fuck it.
             //ctx.camera.angleTo((int)(Math.random()*(360)));
             //ctx.camera.turnTo(currentObstacleObject);
+        } else {
+            GC.FAILED_ATTEMPTS = 0;
         }
 
         main.course.nextObstacle();

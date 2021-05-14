@@ -30,7 +30,7 @@ public class DraynorRooftop extends Course {
                 new Area(new Tile(3097, 3281,3), new Tile(3102, 3277,3))));
         trackList.add(new Obstacle("Cross",
                 "Tightrope",
-                new int[]{-24, 24, 0, 0, -16, 32},
+                new int[]{-8, 8, -40, -24, -8, 8},
                 new Area(new Tile(3086, 3278,3), new Tile(3093, 3272,3))));
         trackList.add(new Obstacle("Balance",
                 "Narrow wall",
