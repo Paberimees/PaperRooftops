@@ -106,7 +106,7 @@ public class InteractObstacle extends Task<ClientContext> {
             System.out.println("[ERROR] : Obstacle failed! Adding +1...");
             GC.FAILED_ATTEMPTS += 1;
             GC.TOTAL_FAILED_CLICKS += 1;
-            GC.FAILED_OBSTACLES.add(currentObstacle.getName());
+            GC.FAILED_OBSTACLES.add("[" + currentObstacle.getName() + " | " + main.course.getObstacleIndex(currentObstacle) + "]");
             if (GC.FAILED_ATTEMPTS >= 3) {
                 System.out.println("[ERROR] : Something is fucked and bricked the script. Not sure what. Trying to webwalk to obstacle.");
                 ctx.movement.step(currentObstacle.getStartArea().getRandomTile());

@@ -5,6 +5,7 @@ import org.powerbot.script.Condition;
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.GroundItem;
 import zillaagility.ZillaAgility;
+import zillaagility.utility.GC;
 
 import java.util.concurrent.Callable;
 
@@ -65,6 +66,10 @@ public class PickUpMarkOfGrace extends Task<ClientContext> {
                 return markOfGraceCount < ctx.inventory.toStream().name("Mark of grace").count(true);
             }
         }, 1000, 10);
+
+        if (markOfGraceCount == ctx.inventory.toStream().name("Mark of grace").count(true)) {
+            GC.TOTAL_FAILED_MARK_CLICKS += 1;
+        }
     }
 
 }

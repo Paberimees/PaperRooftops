@@ -50,7 +50,8 @@ public class ZillaAgility extends PollingScript<ClientContext> implements PaintL
     @Override
     public void poll() {
         //System.out.println(course.getCurrentObstacle(ctx.players.local().tile()));
-        System.out.println("POLL | Total failed clicks: " + GC.TOTAL_FAILED_CLICKS + " | Obstacles failed in order: " + GC.FAILED_OBSTACLES);
+        System.out.println("[LOG] | Total failed clicks: " + GC.TOTAL_FAILED_CLICKS + " | Obstacles failed in order: " + GC.FAILED_OBSTACLES);
+        System.out.println("[LOG] | Total failed mark clicks: " + GC.TOTAL_FAILED_MARK_CLICKS);
         for (Task t : taskList) {
             if (t.activate()) {
                 t.execute();

@@ -71,4 +71,9 @@ public class AlKharidRooftop extends Course {
     public String getName() {
         return courseName;
     }
+
+    @Override
+    public int getObstacleIndex(Obstacle obstacle) {
+        return trackList.indexOf(obstacle);
+    }
 }

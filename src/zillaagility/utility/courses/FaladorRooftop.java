@@ -144,4 +144,9 @@ public class FaladorRooftop extends Course {
     public String getName() {
         return courseName;
     }
+
+    @Override
+    public int getObstacleIndex(Obstacle obstacle) {
+        return trackList.indexOf(obstacle);
+    }
 }

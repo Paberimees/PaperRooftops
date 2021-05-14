@@ -16,6 +16,8 @@ public abstract class Course {
 
     public abstract void reset();
 
+    public abstract int getObstacleIndex(Obstacle obstacle);
+
     public abstract String getName();
 
     /*

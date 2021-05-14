@@ -13,6 +13,8 @@ public class GC {
 
     public static int RUN_ENERGY_MINIMUM = 70;
 
+    public static int TOTAL_FAILED_MARK_CLICKS = 0;
+
     public static void randomizeRunEnergyMinimum() {
         int max = 90;
         int min = 40;
