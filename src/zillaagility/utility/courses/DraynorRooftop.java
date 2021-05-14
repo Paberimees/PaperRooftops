@@ -20,6 +20,7 @@ public class DraynorRooftop extends Course {
         levelRequirement = 10;
         iterator = 0;
         //Adding all the course obstacles one by one.
+        //todo check mark of grace pickup on all houses
         trackList.add(new Obstacle("Climb",
                 "Rough wall",
                 new int[]{-40, -36, -180, -140, -32, 8},

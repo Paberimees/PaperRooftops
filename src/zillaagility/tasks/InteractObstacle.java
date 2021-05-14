@@ -30,8 +30,6 @@ public class InteractObstacle extends Task<ClientContext> {
     public void execute() {
         System.out.println("[TASK] : InteractObstacle");
 
-        //todo check if menu is open just in case? could brick whole code if menu open when it's not supposed to be
-
         Obstacle currentObstacle = main.course.getCurrentObstacle(ctx.players.local().tile());
         System.out.println("[OBSTACLE] : " + currentObstacle.getName());
 
@@ -46,18 +44,6 @@ public class InteractObstacle extends Task<ClientContext> {
 
         main.currentGameObject = currentObstacleObject;
 
-        //GameObject currentObstacleObject = ctx.objects.toStream().name(currentObstacle.getName()).nearest().first();
-        /*GameObject currentObstacleObject = ctx.objects.toStream().filter((obj)->obj.name().equals(currentObstacle.getName())
-                && ctx.movement.reachable(new Tile(
-                        obj.tile().x()+((obj.tile().x()-playerTile.x())/(obj.tile().x()-playerTile.x())),
-                obj.tile().y()+((obj.tile().y()-playerTile.y())/(obj.tile().y()-playerTile.y())))
-                , playerTile))
-                .nearest().first();
-
-         */
-
-        //GameObject currentObstacleObject = ctx.objects.toStream().filter(obj->obj.name().equals("Rough wall") && ctx.movement.reachable(obj.tile(), playerTile)).nearest().first();
-
         if (!currentObstacleObject.valid()) {
             System.out.println("[ERROR] : Current obstacle was not valid! Trying again.../Skipping...");
             main.course.nextObstacle();
@@ -66,8 +52,7 @@ public class InteractObstacle extends Task<ClientContext> {
 
         System.out.println("[LOG] : GameObject: " + currentObstacleObject.name() + " " + currentObstacleObject.id());
 
-        //todo sometimes misclicks, because currentObstacle is too far away? Unsure why; mostly happened on varrock jumpgap house. Add distance checking just in case?
-        //todo this might need webwwalker
+        //todo this might need webwwalker for some cases, mostly redundant in most cases
         currentObstacleObject.bounds(currentObstacle.getBounds());
         if (!currentObstacleObject.inViewport()) {
             System.out.println("[LOG] : Current obstacle was not in viewport. Moving and returning...");
@@ -111,11 +96,6 @@ public class InteractObstacle extends Task<ClientContext> {
                 System.out.println("[ERROR] : Something is fucked and bricked the script. Not sure what. Trying to webwalk to obstacle.");
                 ctx.movement.step(currentObstacle.getStartArea().getRandomTile());
             }
-            //webwalker can bugger off for now, using random tile as a reset
-            //ctx.movement.moveTo(currentObstacleObject, false, false);
-            //camera turning didnt work, but fuck it.
-            //ctx.camera.angleTo((int)(Math.random()*(360)));
-            //ctx.camera.turnTo(currentObstacleObject);
         } else {
             GC.FAILED_ATTEMPTS = 0;
         }

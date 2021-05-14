@@ -25,7 +25,6 @@ public class GoToStart extends Task<ClientContext> {
     @Override
     public void execute() {
         System.out.println("[TASK] : GoToStart");
-        //todo maybe not nearest tile? maybe random tile in area?
         Tile playerTile = ctx.players.local().tile();
         if (playerTile.x() == -1 || playerTile.y() == -1 || playerTile.floor() == -1) {
             System.out.println("[ERROR] : Player tile coordinates included a -1! Trying again...");
@@ -33,7 +32,8 @@ public class GoToStart extends Task<ClientContext> {
         }
         Area startingArea = main.course.getStartingObstacle().getStartArea();
         int distanceToDestination = ctx.movement.distance(startingArea.getCentralTile(), ctx.players.local().tile());
-        if (distanceToDestination > 25 || distanceToDestination == -1) { //arbitrary 25, was 23 before
+        if (distanceToDestination > 25 || distanceToDestination == -1) { //todo arbitrary 25, was 23 before; somehow improve upon this, don't want to resort to webwalker
+            //todo confirm for certain that webwalker doesn't need a wait condition. doesn't seem like it needs one.
             ctx.movement.moveTo(startingArea.getRandomTile(), false, false);
         } else {
             ctx.movement.step(startingArea.getRandomTile());
@@ -43,16 +43,9 @@ public class GoToStart extends Task<ClientContext> {
                 public Boolean call() throws Exception {
                     return !ctx.players.local().inMotion();
                 }
-            }, 1000, 15);
+            }, 1000, 30);
         }
-        /*
-        Condition.wait(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return startingArea.containsOrIntersects(ctx.players.local().tile());
-            }
-        }, 1000, 60);
-        */
+        //todo The wait condition above was 15, worked well for most cases, this probably needs something better though. Webwalker used to bug out right near the start area, just waiting.
         if (!startingArea.containsOrIntersects(ctx.players.local().tile())) {
             System.out.println("[ERROR] : Walking to starting area failed! Trying again...");
             return;

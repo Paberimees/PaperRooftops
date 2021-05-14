@@ -14,9 +14,6 @@ public class CanifisRooftop extends Course {
     private int iterator;
     private List<Obstacle> trackList = new ArrayList<>();
 
-    //todo i saw misclick at pole vault
-    //todo absolutely broken course. fails to click on most marks
-    //todo misclicks on lots of obstacles a lot
     public CanifisRooftop() {
         courseName = "Canifis rooftop";
         levelRequirement = 40;
@@ -78,32 +75,6 @@ public class CanifisRooftop extends Course {
                 defaultBounds,
                 new Area(new Tile(3506, 3473,2), new Tile(3517, 3484,2)), //2
                 14897));
-
-     /*
-     new Tile(3504, 3484, 0),
-        new Tile(3512, 3484, 0),
-        new Tile(3512, 3486, 0),
-        new Tile(3510, 3486, 0),
-        new Tile(3510, 3487, 0),
-        new Tile(3509, 3487, 0),
-        new Tile(3509, 3488, 0),
-        new Tile(3508, 3488, 0),
-        new Tile(3508, 3491, 0),
-        new Tile(3504, 3491, 0)
-      */
-
-        /*
-        Area[] area = {
-    new Area(3508, 3490, 3504, 3485),f
-    new Area(3503, 3490, 3512, 3499, 3),f
-    new Area(3505, 3508, 3494, 3502, 3),f
-    new Area(3493, 3506, 3483, 3497, 3),f
-    new Area(3481, 3501, 3473, 3490, 3),f
-    new Area(3476, 3488, 3485, 3480, 3),f
-    new Area(3487, 3480, 3505, 3467, 3),f
-    new Area(3506, 3473, 3517, 3484, 3)f
-};
-         */
     }
 
     @Override

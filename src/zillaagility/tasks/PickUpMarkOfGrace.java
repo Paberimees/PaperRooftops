@@ -53,13 +53,13 @@ public class PickUpMarkOfGrace extends Task<ClientContext> {
             return;
         }
         //New bounds due to misclicking bug.
+        //todo improve upon this. some marks are broken, some are not. probably need to implement markofgrace bounds to obstacle individually
         if (markOfGrace.tile().floor() == 2) {
             markOfGrace.bounds(new int[]{-4, 4, -144, -140, -4, 4});
         } else {
             markOfGrace.bounds(new int[]{-4, 4, -4, 0, -4, 4});
         }
         markOfGrace.interact("Take", "Mark of grace");
-        //markOfGrace.click(true);
         Condition.wait(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {

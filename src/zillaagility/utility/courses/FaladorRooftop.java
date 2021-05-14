@@ -96,24 +96,6 @@ public class FaladorRooftop extends Course {
                 "Edge",
                 defaultBounds3,
                 new Area(new Tile(3019, 3335,3), new Tile(3027, 3332, 3)))); //3
-
-     /*
-     Area[] area = {
-    new Area(3039, 3341, 3034, 3338),f
-    new Area(3034, 3348, 3041, 3341, 3),f
-    new Area(3043, 3340, 3052, 3350, 3),f
-    new Area(3047, 3359, 3051, 3355, 3),f
-    new Area(3044, 3368, 3049, 3360, 3),f
-    new Area(3033, 3365, 3041, 3360, 3),f
-    new Area(3025, 3356, 3030, 3351, 3),f
-    new Area(3008, 3359, 3022, 3352, 3),f
-    new Area(3016, 3343, 3022, 3350, 3),f
-    new Area(3010, 3343, 3015, 3349, 3),f
-    new Area(3008, 3342, 3013, 3335, 3),f
-    new Area(3011, 3334, 3018, 3331, 3),f
-    new Area(3019, 3335, 3027, 3332, 3)
-};
-         */
     }
 
     @Override

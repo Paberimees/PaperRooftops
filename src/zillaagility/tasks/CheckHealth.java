@@ -2,6 +2,7 @@ package zillaagility.tasks;
 
 import org.powerbot.script.rt4.ClientContext;
 import zillaagility.ZillaAgility;
+import zillaagility.utility.GC;
 
 public class CheckHealth extends Task<ClientContext> {
 
@@ -11,7 +12,7 @@ public class CheckHealth extends Task<ClientContext> {
 
     @Override
     public boolean activate() {
-        return ctx.combat.health() < 8;
+        return ctx.combat.health() < GC.HEALTH_MINIMUM;
     }
 
     @Override

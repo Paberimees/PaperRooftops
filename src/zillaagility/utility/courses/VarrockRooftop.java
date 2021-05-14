@@ -19,6 +19,8 @@ public class VarrockRooftop extends Course {
         levelRequirement = 30;
         iterator = 0;
         //Adding all the course obstacles one by one, where the first obstacle added is the course start.
+        //todo used to have a weird bug where it would brick up right after balance wall, monkey would send clicks on next obstacle but nothing was happening. is it next obstacle bounds error?
+        //todo sometimes ctx.movement.step misclicks for some reason, not sure why.
         trackList.add(new Obstacle("Climb",
                 "Rough wall",
                 new int[]{-44, -40, -180, -144, -20, 8},
@@ -40,7 +42,6 @@ public class VarrockRooftop extends Course {
                 new int[]{-16, 16, -48, -16, -16, 16},
                 new Area(new Tile(3191, 3407,3), new Tile(3199, 3401, 3)),
                 14833)); //3
-
         trackList.add(new Obstacle("Leap", //Fucked up boundaries, polygon??? Areas would overlap otherwise.
                 "Gap",
                 new int[]{-16, 16, -48, -16, -16, 16},
@@ -56,7 +57,6 @@ public class VarrockRooftop extends Course {
                         new Tile(3196, 3387, 3),
                         new Tile(3190, 3387, 3)),
                 14834)); //3
-
         trackList.add(new Obstacle("Leap",
                 "Gap",
                 new int[]{-16, 16, -48, -16, -16, 16},
@@ -70,7 +70,6 @@ public class VarrockRooftop extends Course {
                 "Edge",
                 new int[]{-16, 16, -48, -16, -16, 16},
                 new Area(new Tile(3235, 3409,3), new Tile(3241, 3417, 3)))); //3
-
     }
 
     @Override
