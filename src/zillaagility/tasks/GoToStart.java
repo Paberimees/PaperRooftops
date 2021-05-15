@@ -43,7 +43,7 @@ public class GoToStart extends Task<ClientContext> {
                 public Boolean call() throws Exception {
                     return !ctx.players.local().inMotion();
                 }
-            }, 1000, 30);
+            }, 250, 120);
         }
         //todo The wait condition above was 15, worked well for most cases, this probably needs something better though. Webwalker used to bug out right near the start area, just waiting.
         if (!startingArea.containsOrIntersects(ctx.players.local().tile())) {

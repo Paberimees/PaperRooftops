@@ -11,13 +11,12 @@ public class CanifisRooftop extends Course {
 
     private String courseName;
     private int levelRequirement;
-    private int iterator;
     private List<Obstacle> trackList = new ArrayList<>();
 
+    //todo use debug tool to fix bounds
     public CanifisRooftop() {
         courseName = "Canifis rooftop";
         levelRequirement = 40;
-        iterator = 0;
         //Adding all the course obstacles one by one.
         //Every obstacle seems to change places when going from desktop -> mobile.
         //Anyways, the misclicks seems to be going below, so maybe raise up bounding models and see what happens?
@@ -78,16 +77,6 @@ public class CanifisRooftop extends Course {
     }
 
     @Override
-    public boolean nextObstacle() {
-        if (iterator == trackList.size()-1) {
-            reset();
-            return false;
-        }
-        iterator += 1;
-        return true;
-    }
-
-    @Override
     public Obstacle getCurrentObstacle(Locatable x) {
         if (trackList.stream().anyMatch((obs) -> obs.getStartArea().containsOrIntersects(x))) {
             return trackList.stream().filter((obs) -> obs.getStartArea().containsOrIntersects(x)).findFirst().get();
@@ -98,11 +87,6 @@ public class CanifisRooftop extends Course {
     @Override
     public Obstacle getStartingObstacle() {
         return trackList.get(0);
-    }
-
-    @Override
-    public void reset() {
-        iterator = 0;
     }
 
     @Override

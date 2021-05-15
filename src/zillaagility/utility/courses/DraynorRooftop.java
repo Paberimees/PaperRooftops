@@ -12,13 +12,12 @@ public class DraynorRooftop extends Course {
 
     private String courseName;
     private int levelRequirement;
-    private int iterator;
     private List<Obstacle> trackList = new ArrayList<>();
 
+    //todo use debug tool to fix bounds
     public DraynorRooftop() {
         courseName = "Draynor rooftop";
         levelRequirement = 10;
-        iterator = 0;
         //Adding all the course obstacles one by one.
         //todo check mark of grace pickup on all houses
         trackList.add(new Obstacle("Climb",
@@ -52,16 +51,6 @@ public class DraynorRooftop extends Course {
     }
 
     @Override
-    public boolean nextObstacle() {
-        if (iterator == trackList.size()-1) {
-            reset();
-            return false;
-        }
-        iterator += 1;
-        return true;
-    }
-
-    @Override
     public Obstacle getCurrentObstacle(Locatable x) {
         if (trackList.stream().anyMatch((obs) -> obs.getStartArea().containsOrIntersects(x))) {
             return trackList.stream().filter((obs) -> obs.getStartArea().containsOrIntersects(x)).findFirst().get();
@@ -72,11 +61,6 @@ public class DraynorRooftop extends Course {
     @Override
     public Obstacle getStartingObstacle() {
         return trackList.get(0);
-    }
-
-    @Override
-    public void reset() {
-        iterator = 0;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package zillaagility.GUI;
 
+import org.powerbot.script.rt4.ClientContext;
 import zillaagility.ZillaAgility;
 
 import java.awt.*;
@@ -10,12 +11,13 @@ import javax.swing.*;
 public class DebugTileHeightGUI {
 
     protected ZillaAgility main;
+    private ClientContext ctx;
 
     private JLabel playerDataPanelLowerTileHeightLabel;
     private JLabel obstacleDataPanelLowerTileHeightLabel;
     private JLabel obstacleDataPanelHeader;
 
-    public DebugTileHeightGUI(ZillaAgility main) {
+    public DebugTileHeightGUI(ClientContext ctx, ZillaAgility main) {
         //What an absolute piece of garbage. Gets the job done though
         this.main = main;
         JFrame mainFrame = new JFrame();
@@ -52,8 +54,8 @@ public class DebugTileHeightGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (main.currentGameObject.valid()) {
-                    updatePlayerTileHeight(((int) (Math.random() * 640) + 480) * -1 + "");
-                    updateObstacleTileHeight(((int) (Math.random() * 640) + 480) * -1 + "");
+                    updatePlayerTileHeight(ctx.game.tileHeight(ctx.players.local().boundingModel().x(), ctx.players.local().boundingModel().z()) + "");
+                    updateObstacleTileHeight(ctx.game.tileHeight(main.currentGameObject.boundingModel().x(), main.currentGameObject.boundingModel().z()) + "");
                     updateObstacleHeader(main.currentGameObject.name());
                     return;
                 }

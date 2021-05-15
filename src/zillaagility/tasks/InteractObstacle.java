@@ -50,10 +50,19 @@ public class InteractObstacle extends Task<ClientContext> {
             return;
         }
 
+        //To try and make it autocorrect itself for longer obstacles.
+        int distanceToObject = ctx.movement.distance(currentObstacleObject.tile(), ctx.players.local().tile());
+        if (distanceToObject > 15) {//arbitrary 15 || distanceToObject == -1 ||  bugs it out, cant have it.
+            System.out.println("[ERROR] : Obstacle too far away, moving to try and correct it!");
+            ctx.movement.step(currentObstacleObject.tile());
+            return;
+        }
         System.out.println("[LOG] : GameObject: " + currentObstacleObject.name() + " " + currentObstacleObject.id());
 
         //todo this might need webwwalker for some cases, mostly redundant in most cases
-        currentObstacleObject.bounds(currentObstacle.getBounds());
+        if (main.isMobile) {
+            currentObstacleObject.bounds(currentObstacle.getBounds());
+        }
         if (!currentObstacleObject.inViewport()) {
             System.out.println("[LOG] : Current obstacle was not in viewport. Moving and returning...");
             ctx.movement.step(currentObstacleObject);
@@ -63,7 +72,7 @@ public class InteractObstacle extends Task<ClientContext> {
                 public Boolean call() throws Exception {
                     return !ctx.players.local().inMotion();
                 }
-            }, 1000, 5);
+            }, 250, 20);
             return;
         }
 
@@ -74,7 +83,7 @@ public class InteractObstacle extends Task<ClientContext> {
             public Boolean call() throws Exception {
                 return ctx.players.local().animation() != -1;
             }
-        }, 500, 10);
+        }, 250, 20);
 
         Condition.wait(new Callable<Boolean>() {
             @Override
@@ -82,7 +91,7 @@ public class InteractObstacle extends Task<ClientContext> {
                 return !ctx.players.local().inMotion()
                         && ctx.players.local().animation() == -1;
             }
-        }, 1000, 10);
+        }, 250, 40);
 
         //Because sometimes it fails and kills webwalker otherwise, gets player coords -1-1-1
         //Condition.sleep(1000); //todo replace this sleep with tile -1 -1 -1 check???

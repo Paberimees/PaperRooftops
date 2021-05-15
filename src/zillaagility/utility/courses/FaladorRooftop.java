@@ -127,16 +127,6 @@ public class FaladorRooftop extends Course {
     }
 
     @Override
-    public boolean nextObstacle() {
-        if (iterator == trackList.size()-1) {
-            reset();
-            return false;
-        }
-        iterator += 1;
-        return true;
-    }
-
-    @Override
     public Obstacle getCurrentObstacle(Locatable x) {
         if (trackList.stream().anyMatch((obs) -> obs.getStartArea().containsOrIntersects(x))) {
             return trackList.stream().filter((obs) -> obs.getStartArea().containsOrIntersects(x)).findFirst().get();
@@ -147,11 +137,6 @@ public class FaladorRooftop extends Course {
     @Override
     public Obstacle getStartingObstacle() {
         return trackList.get(0);
-    }
-
-    @Override
-    public void reset() {
-        iterator = 0;
     }
 
     @Override

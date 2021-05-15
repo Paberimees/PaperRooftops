@@ -4,6 +4,7 @@ import org.powerbot.script.PaintListener;
 import org.powerbot.script.PollingScript;
 import org.powerbot.script.Script;
 import org.powerbot.script.rt4.ClientContext;
+import org.powerbot.script.rt4.Constants;
 import org.powerbot.script.rt4.GameObject;
 import org.powerbot.script.rt4.GroundItem;
 import zillaagility.GUI.DebugTileHeightGUI;
@@ -19,14 +20,16 @@ import java.util.List;
 @Script.Manifest(name = "ZillaAgility", description = "Does some jumpy and runny stuff", version = "0.1")
 public class ZillaAgility extends PollingScript<ClientContext> implements PaintListener {
 
+    //functionality variables
     private List<Task> taskList = new ArrayList<>();
     private boolean startScript = false;
     private boolean debugMode = false;
-    //public Course course = new DraynorRooftop();
-    //public Course course = new AlKharidRooftop();
-    //public Course course = new VarrockRooftop();
-    //public Course course = new CanifisRooftop();
-    public Course course = new FaladorRooftop();
+    public Course course;
+    public boolean isMobile;
+
+    //UI mostly for desktop variables
+    public int startAgilityXP;
+    private final Font helveticaFont = new Font("Helvetica", 0, 12);
 
     //this is debug
     public GameObject currentGameObject;
@@ -44,26 +47,11 @@ public class ZillaAgility extends PollingScript<ClientContext> implements PaintL
     public void start() {
         //Disables random events
         ctx.properties.setProperty("randomevents.disable", "true");
-
-        //new ScriptOptionsGUI(ctx, this);
-
+        isMobile = ctx.client().isMobile();
         new ScriptOptionsGUI(ctx, this);
 
-        /*
-        if (!debugMode) {
-            taskList.add(new CheckHealth(ctx, this));
-            taskList.add(new CloseMenu(ctx, this));
-            taskList.add(new TurnOnRun(ctx, this));
-            taskList.add(new PickUpMarkOfGrace(ctx, this));
-            taskList.add(new InteractObstacle(ctx, this));
-            taskList.add(new GoToStart(ctx, this));
-        } else { //debug mode
-            new DebugTileHeightGUI(this);
-            taskList.add(new DebugTask(ctx, this));
-        }
-        */
-
-
+        //UI - mostly desktop
+        startAgilityXP = ctx.skills.experience(Constants.SKILLS_AGILITY);
     }
 
     @Override
@@ -93,12 +81,35 @@ public class ZillaAgility extends PollingScript<ClientContext> implements PaintL
                 currentGameObjectTileHeight = 69;
                 currentMarkOfGraceTileHeight = 69;
             }
+            return;
         }
+
+        //UI for desktop, mostly.
+        long currentAgilityXP = ctx.skills.experience(Constants.SKILLS_AGILITY);
+        long gainedAgilityXP = currentAgilityXP - startAgilityXP;
+
+        //Window
+        g.setColor(new Color(0, 0, 0,255));
+        g.drawRect(5,5,250,100);
+        g.setColor(new Color(33, 33, 33, 230));
+        g.fillRect(5,5,250,100);
+
+        //Info
+        g.setFont(helveticaFont);
+        g.setColor(new Color(172, 172, 172,255));
+        g.drawString("Agility exp. gained: " + gainedAgilityXP, 8, 25);
+        g.drawString("Time running: " + formatTime((int)this.getRuntime()/1000), 8, 60);
+    }
+
+    private String formatTime(int secs) {
+        return String.format("%02d:%02d:%02d", secs / 3600, (secs % 3600) / 60, secs % 60);
     }
 
     public void setStartScript(boolean b) {
         startScript = b;
     }
+
+    public void setDebugMode(boolean b) { debugMode = b; }
 
     public void addTask(Task t) {
         taskList.add(t);

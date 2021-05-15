@@ -11,13 +11,12 @@ public class VarrockRooftop extends Course {
 
     private String courseName;
     private int levelRequirement;
-    private int iterator;
     private List<Obstacle> trackList = new ArrayList<>();
 
+    //todo use debug tool to fix bounds.
     public VarrockRooftop() {
         courseName = "Varrock rooftop";
         levelRequirement = 30;
-        iterator = 0;
         //Adding all the course obstacles one by one, where the first obstacle added is the course start.
         //todo used to have a weird bug where it would brick up right after balance wall, monkey would send clicks on next obstacle but nothing was happening. is it next obstacle bounds error?
         //todo sometimes ctx.movement.step misclicks for some reason, not sure why.
@@ -73,16 +72,6 @@ public class VarrockRooftop extends Course {
     }
 
     @Override
-    public boolean nextObstacle() {
-        if (iterator == trackList.size()-1) {
-            reset();
-            return false;
-        }
-        iterator += 1;
-        return true;
-    }
-
-    @Override
     public Obstacle getCurrentObstacle(Locatable x) {
         if (trackList.stream().anyMatch((obs) -> obs.getStartArea().containsOrIntersects(x))) {
             return trackList.stream().filter((obs) -> obs.getStartArea().containsOrIntersects(x)).findFirst().get();
@@ -93,11 +82,6 @@ public class VarrockRooftop extends Course {
     @Override
     public Obstacle getStartingObstacle() {
         return trackList.get(0);
-    }
-
-    @Override
-    public void reset() {
-        iterator = 0;
     }
 
     @Override

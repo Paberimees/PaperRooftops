@@ -22,6 +22,7 @@ public class ScriptOptionsGUI extends JFrame {
         this.ctx = ctx;
         this.main = main;
 
+        this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setContentPane(mainPanel);
         this.pack();
@@ -42,6 +43,9 @@ public class ScriptOptionsGUI extends JFrame {
     }
 
     private void finishSetup() {
+        //todo add debugmode option to gui
+        boolean debugMode = false; //THIS SHOULD BE AN OPTION IN THE GUI
+
         String value = courseList.getSelectedValue().toString();
         switch (value) {
             case ("Draynor"):
@@ -59,19 +63,28 @@ public class ScriptOptionsGUI extends JFrame {
             case ("Falador"):
                 main.course = new FaladorRooftop();
                 break;
+            case ("Seers"):
+                main.course = new SeersRooftop();
+                break;
             default:
                 System.out.println("ERROR! Somehow nothing was selected. Exiting script...");
                 ctx.controller.stop();
                 return;
         }
 
-        //Don't need to add the tasks here, but planning to add some options in the future
-        //taskList.add(new CheckHealth(ctx, this));
-        main.addTask(new CloseMenu(ctx, main));
-        main.addTask(new TurnOnRun(ctx, main));
-        main.addTask(new PickUpMarkOfGrace(ctx, main));
-        main.addTask(new InteractObstacle(ctx, main));
-        main.addTask(new GoToStart(ctx, main));
+        if (!debugMode) {
+            //Don't need to add the tasks here, but planning to add some options in the future
+            //taskList.add(new CheckHealth(ctx, this));
+            main.addTask(new CloseMenu(ctx, main));
+            main.addTask(new TurnOnRun(ctx, main));
+            main.addTask(new PickUpMarkOfGrace(ctx, main));
+            main.addTask(new InteractObstacle(ctx, main));
+            main.addTask(new GoToStart(ctx, main));
+        } else {
+            main.addTask(new DebugTask(ctx, main));
+            new DebugTileHeightGUI(ctx, main);
+        }
+
 
         main.setStartScript(true);
         this.dispose();

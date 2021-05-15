@@ -49,7 +49,7 @@ public class PickUpMarkOfGrace extends Task<ClientContext> {
                 public Boolean call() throws Exception {
                     return !ctx.players.local().inMotion();
                 }
-            }, 1000, 10);
+            }, 250, 40);
             return;
         }
         /*
@@ -79,12 +79,16 @@ public class PickUpMarkOfGrace extends Task<ClientContext> {
         markOfGrace.bounds(-4, 4, -4+tileHeightDiff, 0+tileHeightDiff, -4, 4);
 */
         //todo fuck this look at Game.java for possibly faster calculations @api
-        if (markOfGrace.tile().floor() == 2) {
-            markOfGrace.bounds(new int[]{-4, 4, -144, -140, -4, 4});
-        } else {
-            markOfGrace.bounds(new int[]{-4, 4, -4, 0, -4, 4});
+        if (main.isMobile) {
+            if (markOfGrace.tile().floor() == 2) {
+                markOfGrace.bounds(new int[]{-4, 4, -144, -140, -4, 4});
+            } else {
+                markOfGrace.bounds(new int[]{-4, 4, -4, 0, -4, 4});
+            }
         }
 
+        /*
+        //todo THIS IS FUCKING DOGSHIT. REMOVE THIS.
         if (GC.CONCURRENT_FAILED_MARK_CLICKS >= 3 && GC.MARK_TILEHEIGHT_DIFF == 0) {
             int markTileHeight = ctx.game.tileHeight(markOfGrace.boundingModel().x(), markOfGrace.boundingModel().z());
             int playerTileHeight = ctx.game.tileHeight(ctx.players.local().boundingModel().x(), ctx.players.local().boundingModel().z());
@@ -95,6 +99,7 @@ public class PickUpMarkOfGrace extends Task<ClientContext> {
         } else {
             markOfGrace.bounds(-4, 4, -4+GC.MARK_TILEHEIGHT_DIFF, 0+GC.MARK_TILEHEIGHT_DIFF, -4, 4);
         }
+         */
 
         markOfGrace.interact("Take", "Mark of grace");
         Condition.wait(new Callable<Boolean>() {
@@ -102,7 +107,7 @@ public class PickUpMarkOfGrace extends Task<ClientContext> {
             public Boolean call() throws Exception {
                 return markOfGraceCount < ctx.inventory.toStream().name("Mark of grace").count(true);
             }
-        }, 1000, 10);
+        }, 250, 40);
 
         if (markOfGraceCount == ctx.inventory.toStream().name("Mark of grace").count(true)) {
             GC.TOTAL_FAILED_MARK_CLICKS += 1;
