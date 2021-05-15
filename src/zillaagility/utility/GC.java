@@ -3,6 +3,7 @@ package zillaagility.utility;
 import java.util.ArrayList;
 import java.util.List;
 
+//todo move all of these global VARIABLES in to a global variables class instead of constants
 public class GC {
 
     public static int FAILED_ATTEMPTS = 0;

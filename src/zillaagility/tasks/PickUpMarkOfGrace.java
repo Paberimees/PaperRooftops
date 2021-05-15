@@ -52,13 +52,40 @@ public class PickUpMarkOfGrace extends Task<ClientContext> {
             }, 1000, 10);
             return;
         }
+        /*
         //New bounds due to misclicking bug.
         //todo improve upon this. some marks are broken, some are not. probably need to implement markofgrace bounds to obstacle individually
+
+        if (!(ctx.players.local().tile().x() == markOfGrace.tile().x() && ctx.players.local().tile().y() == markOfGrace.tile().y() && ctx.players.local().tile().floor() == markOfGrace.tile().floor())) {
+            ctx.movement.step(markOfGrace.tile());
+            Condition.sleep(1000);
+            Condition.wait(new Callable<Boolean>() {
+                @Override
+                public Boolean call() throws Exception {
+                    return !ctx.players.local().inMotion();
+                }
+            }, 1000, 10);
+        }
+
+        //this markofgrace shit is broken
+        if (!(ctx.players.local().tile().x() == markOfGrace.tile().x() && ctx.players.local().tile().y() == markOfGrace.tile().y() && ctx.players.local().tile().floor() == markOfGrace.tile().floor())) {
+            System.out.println("[ERROR] : Fucking marks of graces, apparently im not standing right on top it.");
+            return;
+        }
+        int markTileHeight = ctx.game.tileHeight(markOfGrace.boundingModel().x(), markOfGrace.boundingModel().z());
+        int playerTileHeight = ctx.game.tileHeight(ctx.players.local().boundingModel().x(), ctx.players.local().boundingModel().z());
+        int tileHeightDiff = markTileHeight-playerTileHeight;
+        Condition.sleep(2500); //todo IMPROVE THIS? sleeping for a bit, because that tileheight function... it scared me
+        markOfGrace.bounds(-4, 4, -4+tileHeightDiff, 0+tileHeightDiff, -4, 4);
+*/
+        //todo fuck this look at Game.java for possibly faster calculations @api
         if (markOfGrace.tile().floor() == 2) {
             markOfGrace.bounds(new int[]{-4, 4, -144, -140, -4, 4});
         } else {
             markOfGrace.bounds(new int[]{-4, 4, -4, 0, -4, 4});
         }
+
+
         markOfGrace.interact("Take", "Mark of grace");
         Condition.wait(new Callable<Boolean>() {
             @Override
