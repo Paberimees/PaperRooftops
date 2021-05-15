@@ -85,6 +85,16 @@ public class PickUpMarkOfGrace extends Task<ClientContext> {
             markOfGrace.bounds(new int[]{-4, 4, -4, 0, -4, 4});
         }
 
+        if (GC.CONCURRENT_FAILED_MARK_CLICKS >= 3 && GC.MARK_TILEHEIGHT_DIFF == 0) {
+            int markTileHeight = ctx.game.tileHeight(markOfGrace.boundingModel().x(), markOfGrace.boundingModel().z());
+            int playerTileHeight = ctx.game.tileHeight(ctx.players.local().boundingModel().x(), ctx.players.local().boundingModel().z());
+            GC.MARK_TILEHEIGHT_DIFF = markTileHeight-playerTileHeight;
+            Condition.sleep(2500); //todo IMPROVE THIS? sleeping for a bit, because that tileheight function... it scared me
+            //markOfGrace.bounds(-4, 4, -4+tileHeightDiff, 0+tileHeightDiff, -4, 4);
+            return;
+        } else {
+            markOfGrace.bounds(-4, 4, -4+GC.MARK_TILEHEIGHT_DIFF, 0+GC.MARK_TILEHEIGHT_DIFF, -4, 4);
+        }
 
         markOfGrace.interact("Take", "Mark of grace");
         Condition.wait(new Callable<Boolean>() {
@@ -96,6 +106,9 @@ public class PickUpMarkOfGrace extends Task<ClientContext> {
 
         if (markOfGraceCount == ctx.inventory.toStream().name("Mark of grace").count(true)) {
             GC.TOTAL_FAILED_MARK_CLICKS += 1;
+            GC.CONCURRENT_FAILED_MARK_CLICKS += 1;
+        } else {
+            GC.CONCURRENT_FAILED_MARK_CLICKS = 0;
         }
     }
 

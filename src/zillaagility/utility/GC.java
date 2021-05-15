@@ -16,6 +16,10 @@ public class GC {
 
     public static int TOTAL_FAILED_MARK_CLICKS = 0;
 
+    public static int CONCURRENT_FAILED_MARK_CLICKS = 0;
+
+    public static int MARK_TILEHEIGHT_DIFF = 0;
+
     public static int HEALTH_MINIMUM = 8;
 
     public static void randomizeRunEnergyMinimum() {

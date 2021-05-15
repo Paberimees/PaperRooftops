@@ -7,6 +7,7 @@ import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.GameObject;
 import org.powerbot.script.rt4.GroundItem;
 import zillaagility.GUI.DebugTileHeightGUI;
+import zillaagility.GUI.ScriptOptionsGUI;
 import zillaagility.tasks.*;
 import zillaagility.utility.GC;
 import zillaagility.utility.courses.*;
@@ -19,7 +20,7 @@ import java.util.List;
 public class ZillaAgility extends PollingScript<ClientContext> implements PaintListener {
 
     private List<Task> taskList = new ArrayList<>();
-    private boolean startScript = true;
+    private boolean startScript = false;
     private boolean debugMode = false;
     //public Course course = new DraynorRooftop();
     //public Course course = new AlKharidRooftop();
@@ -46,7 +47,9 @@ public class ZillaAgility extends PollingScript<ClientContext> implements PaintL
 
         //new ScriptOptionsGUI(ctx, this);
 
+        new ScriptOptionsGUI(ctx, this);
 
+        /*
         if (!debugMode) {
             taskList.add(new CheckHealth(ctx, this));
             taskList.add(new CloseMenu(ctx, this));
@@ -58,16 +61,16 @@ public class ZillaAgility extends PollingScript<ClientContext> implements PaintL
             new DebugTileHeightGUI(this);
             taskList.add(new DebugTask(ctx, this));
         }
-
+        */
 
 
     }
 
     @Override
     public void poll() {
-        System.out.println("[LOG] | Total failed clicks: " + GC.TOTAL_FAILED_CLICKS + " | Obstacles failed in order: " + GC.FAILED_OBSTACLES);
-        System.out.println("[LOG] | Total failed mark clicks: " + GC.TOTAL_FAILED_MARK_CLICKS);
         if (startScript) {
+            System.out.println("[LOG] | Total failed clicks: " + GC.TOTAL_FAILED_CLICKS + " | Obstacles failed in order: " + GC.FAILED_OBSTACLES);
+            System.out.println("[LOG] | Total failed mark clicks: " + GC.TOTAL_FAILED_MARK_CLICKS);
             for (Task t : taskList) {
                 if (t.activate()) {
                     t.execute();
@@ -91,5 +94,13 @@ public class ZillaAgility extends PollingScript<ClientContext> implements PaintL
                 currentMarkOfGraceTileHeight = 69;
             }
         }
+    }
+
+    public void setStartScript(boolean b) {
+        startScript = b;
+    }
+
+    public void addTask(Task t) {
+        taskList.add(t);
     }
 }
