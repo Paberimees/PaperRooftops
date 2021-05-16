@@ -100,8 +100,11 @@ public class PickUpMarkOfGrace extends Task<ClientContext> {
             markOfGrace.bounds(-4, 4, -4+GC.MARK_TILEHEIGHT_DIFF, 0+GC.MARK_TILEHEIGHT_DIFF, -4, 4);
         }
          */
-
-        markOfGrace.interact("Take", "Mark of grace");
+        if (main.isMobile) {
+            markOfGrace.interact("Take", "Mark of grace");
+        } else {
+            markOfGrace.click("Take", "Mark of grace");
+        }
         Condition.wait(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {

@@ -46,7 +46,6 @@ public class InteractObstacle extends Task<ClientContext> {
 
         if (!currentObstacleObject.valid()) {
             System.out.println("[ERROR] : Current obstacle was not valid! Trying again.../Skipping...");
-            main.course.nextObstacle();
             return;
         }
 
@@ -60,8 +59,12 @@ public class InteractObstacle extends Task<ClientContext> {
         System.out.println("[LOG] : GameObject: " + currentObstacleObject.name() + " " + currentObstacleObject.id());
 
         //todo this might need webwwalker for some cases, mostly redundant in most cases
-        if (main.isMobile) {
+        //todo check if this improves desktop support or no (first obstacle bounds)
+        if (main.isMobile || main.course.getStartingObstacle() == currentObstacle) { //starting obstacles are walls etc that are hard to click and might improve desktop support
             currentObstacleObject.bounds(currentObstacle.getBounds());
+        } else {
+            //use desktop bounds, but much smaller.
+            currentObstacleObject.bounds(new int[]{-4, 4, -36, -28, -4, 4});
         }
         if (!currentObstacleObject.inViewport()) {
             System.out.println("[LOG] : Current obstacle was not in viewport. Moving and returning...");
@@ -76,7 +79,12 @@ public class InteractObstacle extends Task<ClientContext> {
             return;
         }
 
-        currentObstacleObject.interact(currentObstacle.getAction(), currentObstacle.getName());
+        //todo check if this improves desktop support or not.
+        if (main.isMobile) {
+            currentObstacleObject.interact(currentObstacle.getAction(), currentObstacle.getName());
+        } else { //possibly to improve desktop clicks.
+            currentObstacleObject.click(currentObstacle.getAction(), currentObstacle.getName());
+        }
 
         Condition.wait(new Callable<Boolean>() {
             @Override
@@ -108,7 +116,5 @@ public class InteractObstacle extends Task<ClientContext> {
         } else {
             GC.FAILED_ATTEMPTS = 0;
         }
-
-        main.course.nextObstacle();
     }
 }

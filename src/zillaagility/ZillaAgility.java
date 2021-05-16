@@ -42,16 +42,17 @@ public class ZillaAgility extends PollingScript<ClientContext> implements PaintL
     //todo add autocorrector
     //todo viewport should zoom out if neccessary
     //todo implement zoom check.
-    //todo implement level check.
+    //todo implement agility level check.
+    //todo desktop starting obstacle bounds same for mobile - rough wall hard to click on
     @Override
     public void start() {
         //Disables random events
         ctx.properties.setProperty("randomevents.disable", "true");
         isMobile = ctx.client().isMobile();
-        new ScriptOptionsGUI(ctx, this);
-
         //UI - mostly desktop
         startAgilityXP = ctx.skills.experience(Constants.SKILLS_AGILITY);
+        //Opens up the GUI
+        new ScriptOptionsGUI(ctx, this);
     }
 
     @Override
@@ -70,6 +71,7 @@ public class ZillaAgility extends PollingScript<ClientContext> implements PaintL
 
     @Override
     public void repaint(Graphics g) {
+        /*
         if (debugMode) {
             g.setColor(new Color(0, 255, 0));
             if (currentGameObject != null) {
@@ -83,16 +85,16 @@ public class ZillaAgility extends PollingScript<ClientContext> implements PaintL
             }
             return;
         }
-
+        */
         //UI for desktop, mostly.
         long currentAgilityXP = ctx.skills.experience(Constants.SKILLS_AGILITY);
         long gainedAgilityXP = currentAgilityXP - startAgilityXP;
 
         //Window
         g.setColor(new Color(0, 0, 0,255));
-        g.drawRect(5,5,250,100);
+        g.drawRect(5,5,175,80);
         g.setColor(new Color(33, 33, 33, 230));
-        g.fillRect(5,5,250,100);
+        g.fillRect(5,5,175,80);
 
         //Info
         g.setFont(helveticaFont);
