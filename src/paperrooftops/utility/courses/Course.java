@@ -1,4 +1,4 @@
-package zillaagility.utility.courses;
+package paperrooftops.utility.courses;
 
 import org.powerbot.script.Locatable;
 

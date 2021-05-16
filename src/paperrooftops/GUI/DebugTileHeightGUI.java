@@ -1,7 +1,7 @@
-package zillaagility.GUI;
+package paperrooftops.GUI;
 
 import org.powerbot.script.rt4.ClientContext;
-import zillaagility.ZillaAgility;
+import paperrooftops.PaperRooftops;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,14 +10,14 @@ import javax.swing.*;
 
 public class DebugTileHeightGUI {
 
-    protected ZillaAgility main;
+    protected PaperRooftops main;
     private ClientContext ctx;
 
     private JLabel playerDataPanelLowerTileHeightLabel;
     private JLabel obstacleDataPanelLowerTileHeightLabel;
     private JLabel obstacleDataPanelHeader;
 
-    public DebugTileHeightGUI(ClientContext ctx, ZillaAgility main) {
+    public DebugTileHeightGUI(ClientContext ctx, PaperRooftops main) {
         //What an absolute piece of garbage. Gets the job done though
         this.main = main;
         JFrame mainFrame = new JFrame();

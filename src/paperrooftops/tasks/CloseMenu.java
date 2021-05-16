@@ -1,11 +1,11 @@
-package zillaagility.tasks;
+package paperrooftops.tasks;
 
 import org.powerbot.script.rt4.ClientContext;
-import zillaagility.ZillaAgility;
+import paperrooftops.PaperRooftops;
 
 public class CloseMenu extends Task<ClientContext> {
 
-    public CloseMenu(ClientContext ctx, ZillaAgility main) {
+    public CloseMenu(ClientContext ctx, PaperRooftops main) {
         super(ctx, main);
     }
 

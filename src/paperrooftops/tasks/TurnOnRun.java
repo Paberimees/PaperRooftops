@@ -1,15 +1,15 @@
-package zillaagility.tasks;
+package paperrooftops.tasks;
 
 import org.powerbot.script.Condition;
 import org.powerbot.script.rt4.ClientContext;
-import zillaagility.ZillaAgility;
-import zillaagility.utility.GC;
+import paperrooftops.PaperRooftops;
+import paperrooftops.utility.GC;
 
 import java.util.concurrent.Callable;
 
 public class TurnOnRun extends Task<ClientContext> {
 
-    public TurnOnRun(ClientContext ctx, ZillaAgility main) {
+    public TurnOnRun(ClientContext ctx, PaperRooftops main) {
         super(ctx, main);
     }
 

@@ -1,14 +1,14 @@
-package zillaagility.tasks;
+package paperrooftops.tasks;
 
 import org.powerbot.script.ClientAccessor;
 import org.powerbot.script.rt4.ClientContext;
-import zillaagility.ZillaAgility;
+import paperrooftops.PaperRooftops;
 
 public abstract class Task <C extends ClientContext> extends ClientAccessor<C> {
 
-    protected ZillaAgility main;
+    protected PaperRooftops main;
 
-    public Task(C ctx, ZillaAgility main) {
+    public Task(C ctx, PaperRooftops main) {
         super(ctx);
         this.main = main;
     }

@@ -1,16 +1,16 @@
-package zillaagility.tasks;
+package paperrooftops.tasks;
 
 import org.powerbot.script.Area;
 import org.powerbot.script.Condition;
 import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.ClientContext;
-import zillaagility.ZillaAgility;
+import paperrooftops.PaperRooftops;
 
 import java.util.concurrent.Callable;
 
 public class GoToStart extends Task<ClientContext> {
 
-    public GoToStart(ClientContext ctx, ZillaAgility main) {
+    public GoToStart(ClientContext ctx, PaperRooftops main) {
         super(ctx, main);
     }
 

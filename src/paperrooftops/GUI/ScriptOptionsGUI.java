@@ -1,9 +1,9 @@
-package zillaagility.GUI;
+package paperrooftops.GUI;
 
 import org.powerbot.script.rt4.ClientContext;
-import zillaagility.ZillaAgility;
-import zillaagility.tasks.*;
-import zillaagility.utility.courses.*;
+import paperrooftops.PaperRooftops;
+import paperrooftops.tasks.*;
+import paperrooftops.utility.courses.*;
 
 import javax.swing.*;
 
@@ -14,9 +14,9 @@ public class ScriptOptionsGUI extends JFrame {
     private JLabel courseHeader;
 
     private ClientContext ctx;
-    private ZillaAgility main;
+    private PaperRooftops main;
 
-    public ScriptOptionsGUI(ClientContext ctx, ZillaAgility main) {
+    public ScriptOptionsGUI(ClientContext ctx, PaperRooftops main) {
         super("PaperRooftops - made by Paberimees");
 
         this.ctx = ctx;

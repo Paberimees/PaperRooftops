@@ -1,12 +1,12 @@
-package zillaagility.tasks;
+package paperrooftops.tasks;
 
 import org.powerbot.script.rt4.ClientContext;
-import zillaagility.ZillaAgility;
-import zillaagility.utility.GC;
+import paperrooftops.PaperRooftops;
+import paperrooftops.utility.GC;
 
 public class CheckHealth extends Task<ClientContext> {
 
-    public CheckHealth(ClientContext ctx, ZillaAgility main) {
+    public CheckHealth(ClientContext ctx, PaperRooftops main) {
         super(ctx, main);
     }
 

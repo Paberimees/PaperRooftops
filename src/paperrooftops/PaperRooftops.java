@@ -1,4 +1,4 @@
-package zillaagility;
+package paperrooftops;
 
 import org.powerbot.script.PaintListener;
 import org.powerbot.script.PollingScript;
@@ -7,18 +7,17 @@ import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.Constants;
 import org.powerbot.script.rt4.GameObject;
 import org.powerbot.script.rt4.GroundItem;
-import zillaagility.GUI.DebugTileHeightGUI;
-import zillaagility.GUI.ScriptOptionsGUI;
-import zillaagility.tasks.*;
-import zillaagility.utility.GC;
-import zillaagility.utility.courses.*;
+import paperrooftops.GUI.ScriptOptionsGUI;
+import paperrooftops.tasks.*;
+import paperrooftops.utility.GC;
+import paperrooftops.utility.courses.*;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Script.Manifest(name = "ZillaAgility", description = "Does some jumpy and runny stuff", version = "0.1")
-public class ZillaAgility extends PollingScript<ClientContext> implements PaintListener {
+public class PaperRooftops extends PollingScript<ClientContext> implements PaintListener {
 
     //functionality variables
     private List<Task> taskList = new ArrayList<>();

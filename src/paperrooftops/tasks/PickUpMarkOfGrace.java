@@ -1,17 +1,17 @@
-package zillaagility.tasks;
+package paperrooftops.tasks;
 
 import org.powerbot.script.Area;
 import org.powerbot.script.Condition;
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.GroundItem;
-import zillaagility.ZillaAgility;
-import zillaagility.utility.GC;
+import paperrooftops.PaperRooftops;
+import paperrooftops.utility.GC;
 
 import java.util.concurrent.Callable;
 
 public class PickUpMarkOfGrace extends Task<ClientContext> {
 
-    public PickUpMarkOfGrace(ClientContext ctx, ZillaAgility main) {
+    public PickUpMarkOfGrace(ClientContext ctx, PaperRooftops main) {
         super(ctx, main);
     }
 

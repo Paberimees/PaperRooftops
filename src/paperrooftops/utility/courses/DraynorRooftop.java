@@ -1,10 +1,9 @@
-package zillaagility.utility.courses;
+package paperrooftops.utility.courses;
 
 import org.powerbot.script.Area;
 import org.powerbot.script.Locatable;
 import org.powerbot.script.Tile;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 

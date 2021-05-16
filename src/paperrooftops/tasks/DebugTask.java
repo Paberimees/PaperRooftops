@@ -1,16 +1,15 @@
-package zillaagility.tasks;
+package paperrooftops.tasks;
 
 import org.powerbot.script.Condition;
-import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.GameObject;
 import org.powerbot.script.rt4.GroundItem;
-import zillaagility.ZillaAgility;
-import zillaagility.utility.courses.Obstacle;
+import paperrooftops.PaperRooftops;
+import paperrooftops.utility.courses.Obstacle;
 
 public class DebugTask extends Task<ClientContext> {
 
-    public DebugTask(ClientContext ctx, ZillaAgility main) {
+    public DebugTask(ClientContext ctx, PaperRooftops main) {
         super(ctx, main);
     }
 
