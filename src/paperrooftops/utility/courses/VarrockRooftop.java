@@ -18,7 +18,7 @@ public class VarrockRooftop extends Course {
         courseName = "Varrock rooftop";
         levelRequirement = 30;
         //Adding all the course obstacles one by one, where the first obstacle added is the course start.
-        //todo used to have a weird bug where it would brick up right after balance wall, monkey would send clicks on next obstacle but nothing was happening. is it next obstacle bounds error?
+        //todo used to have a weird bug where it would brick up right after balance wall, monkey would send clicks on next obstacle but nothing was happening. is it next obstacle bounds error? edit: same obstacle bricks desktop with default bounds.
         //todo sometimes ctx.movement.step misclicks for some reason, not sure why.
         trackList.add(new Obstacle("Climb",
                 "Rough wall",

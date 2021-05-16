@@ -9,17 +9,21 @@ import org.powerbot.script.rt4.GameObject;
 import org.powerbot.script.rt4.GroundItem;
 import paperrooftops.GUI.ScriptOptionsGUI;
 import paperrooftops.tasks.*;
-import paperrooftops.utility.GC;
+import paperrooftops.utility.GV;
 import paperrooftops.utility.courses.*;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+Notes:
+- sout - Why? Monkey log doesn't work for me. Use cmd.exe and "java -Xmx1536M -jar PowBot.jar" to get the log.
+ */
 @Script.Manifest(name = "ZillaAgility", description = "Does some jumpy and runny stuff", version = "0.1")
 public class PaperRooftops extends PollingScript<ClientContext> implements PaintListener {
 
-    //functionality variables
+    //Functionality variables
     private List<Task> taskList = new ArrayList<>();
     private boolean startScript = false;
     private boolean debugMode = false;
@@ -30,25 +34,24 @@ public class PaperRooftops extends PollingScript<ClientContext> implements Paint
     public int startAgilityXP;
     private final Font helveticaFont = new Font("Helvetica", 0, 12);
 
-    //this is debug
+    //This is debug
     public GameObject currentGameObject;
     public GroundItem currentMarkOfGrace;
     public int currentMarkOfGraceTileHeight;
     public int currentGameObjectTileHeight;
 
-    //todo make it eat food if it's low, log out if low and no food
-    //todo fix course marks
-    //todo add autocorrector
-    //todo viewport should zoom out if neccessary
-    //todo implement zoom check.
-    //todo implement agility level check.
-    //todo desktop starting obstacle bounds same for mobile - rough wall hard to click on
+    //todo FEATURE: Option to eat food when low.
+    //todo FEATURE: Automatic viewport zooming out/correction.
+    //todo FEATURE: Agility level check for courses.
+    //todo FEATURE: Option to choose debug mode from GUI.
+    //todo BUGFIX: Course marks are still a little iffy on mobile. Fix could possibly be including y TileHeight offset in Obstacle for calculating MoG bounds?
+    //todo BUGFIX: Enable Seers course && it needs a preset path, because Webwalking to starting area takes a massive detour.
     @Override
     public void start() {
         //Disables random events
         ctx.properties.setProperty("randomevents.disable", "true");
         isMobile = ctx.client().isMobile();
-        //UI - mostly desktop
+        //UI mostly for desktop variables values
         startAgilityXP = ctx.skills.experience(Constants.SKILLS_AGILITY);
         //Opens up the GUI
         new ScriptOptionsGUI(ctx, this);
@@ -57,8 +60,8 @@ public class PaperRooftops extends PollingScript<ClientContext> implements Paint
     @Override
     public void poll() {
         if (startScript) {
-            System.out.println("[LOG] | Total failed clicks: " + GC.TOTAL_FAILED_CLICKS + " | Obstacles failed in order: " + GC.FAILED_OBSTACLES);
-            System.out.println("[LOG] | Total failed mark clicks: " + GC.TOTAL_FAILED_MARK_CLICKS);
+            System.out.println("[LOG] | Total failed clicks: " + GV.TOTAL_FAILED_CLICKS + " | Obstacles failed in order: " + GV.FAILED_OBSTACLES);
+            System.out.println("[LOG] | Total failed mark clicks: " + GV.TOTAL_FAILED_MARK_CLICKS);
             for (Task t : taskList) {
                 if (t.activate()) {
                     t.execute();
@@ -70,6 +73,7 @@ public class PaperRooftops extends PollingScript<ClientContext> implements Paint
 
     @Override
     public void repaint(Graphics g) {
+        //todo with the if statement there, doesn't draw graphics.
         /*
         if (debugMode) {
             g.setColor(new Color(0, 255, 0));
@@ -85,7 +89,7 @@ public class PaperRooftops extends PollingScript<ClientContext> implements Paint
             return;
         }
         */
-        //UI for desktop, mostly.
+        //UI mostly for desktop painting
         long currentAgilityXP = ctx.skills.experience(Constants.SKILLS_AGILITY);
         long gainedAgilityXP = currentAgilityXP - startAgilityXP;
 

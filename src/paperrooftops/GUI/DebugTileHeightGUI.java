@@ -7,7 +7,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-
+/*
+Notes:
+- Written all by hand, that's why it looks terrible. It was also supposed to be fairly disposable.
+- Why is this tool useful? Well, apparently the y is different for desktop and mobile for some obstacles, thus finding out the offset in which desktop and mobile differ, we can set the mobile bounds to exactly the same as desktop bounds. Since the y value is calculated with ctx.game.tileHeight() and that function lags out the bot, it's best to add it here as a button. Plus, this way, it hooks on to the obstacle and makes getting the y values very easy.
+ */
 public class DebugTileHeightGUI {
 
     protected PaperRooftops main;
@@ -18,7 +22,7 @@ public class DebugTileHeightGUI {
     private JLabel obstacleDataPanelHeader;
 
     public DebugTileHeightGUI(ClientContext ctx, PaperRooftops main) {
-        //What an absolute piece of garbage. Gets the job done though
+        //What an absolute piece of garbage code. Gets the job done though
         this.main = main;
         JFrame mainFrame = new JFrame();
 

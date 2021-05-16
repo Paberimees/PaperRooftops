@@ -5,7 +5,7 @@ import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.GameObject;
 import paperrooftops.PaperRooftops;
-import paperrooftops.utility.GC;
+import paperrooftops.utility.GV;
 import paperrooftops.utility.courses.Obstacle;
 
 import java.util.concurrent.Callable;
@@ -27,9 +27,11 @@ public class InteractObstacle extends Task<ClientContext> {
     public void execute() {
         System.out.println("[TASK] : InteractObstacle");
 
+        //Gets the current obstacle.
         Obstacle currentObstacle = main.course.getCurrentObstacle(ctx.players.local().tile());
         System.out.println("[OBSTACLE] : " + currentObstacle.getName());
 
+        //Finds the current obstacle in the game, depending on if the Obstacle() object had an ID attached to it or not.
         Tile playerTile = ctx.players.local().tile();
         GameObject currentObstacleObject = ctx.objects.toStream()
                 .filter((obj)-> {
@@ -39,30 +41,31 @@ public class InteractObstacle extends Task<ClientContext> {
                     return obj.name().equals(currentObstacle.getName()) && obj.id() == currentObstacle.getId();
                 }).nearest().first();
 
+        //Debug painting.
         main.currentGameObject = currentObstacleObject;
 
+        //Check if the obstacle object in game is valid.
         if (!currentObstacleObject.valid()) {
             System.out.println("[ERROR] : Current obstacle was not valid! Trying again.../Skipping...");
             return;
         }
 
-        //To try and make it autocorrect itself for longer obstacles.
+        //Try and correct itself on longer obstacles if it's too far away from the player (Al Kharid big roof; Varrock bigger roof; Etc).
         int distanceToObject = ctx.movement.distance(currentObstacleObject.tile(), ctx.players.local().tile());
-        if (distanceToObject > 15) {//arbitrary 15 || distanceToObject == -1 ||  bugs it out, cant have it.
+        if (distanceToObject > 15) {//arbitrary 15 || distanceToObject == -1 ||  bugs it out, cant have it, even though valid calculations seem to return -1 sometimes.
             System.out.println("[ERROR] : Obstacle too far away, moving to try and correct it!");
             ctx.movement.step(currentObstacleObject.tile());
             return;
         }
         System.out.println("[LOG] : GameObject: " + currentObstacleObject.name() + " " + currentObstacleObject.id());
 
-        //todo this might need webwwalker for some cases, mostly redundant in most cases
-        //todo check if this improves desktop support or no (first obstacle bounds)
+        //Sets custom bounds for mobile objects.
         if (main.isMobile || main.course.getStartingObstacle() == currentObstacle) { //starting obstacles are walls etc that are hard to click and might improve desktop support
             currentObstacleObject.bounds(currentObstacle.getBounds());
-        } else {
-            //use desktop bounds, but much smaller.
-            currentObstacleObject.bounds(new int[]{-4, 4, -36, -28, -4, 4});
         }
+        // ^ Else - use desktop bounds. Experimented with smaller bounds, but they stall stay default as is for now, except the first obstacle (Walls to climb up)
+
+        //If the current obstacle is not in viewport, move and turn to it, wait until player is not in motion, return.
         if (!currentObstacleObject.inViewport()) {
             System.out.println("[LOG] : Current obstacle was not in viewport. Moving and returning...");
             ctx.movement.step(currentObstacleObject);
@@ -76,13 +79,15 @@ public class InteractObstacle extends Task<ClientContext> {
             return;
         }
 
-        //todo check if this improves desktop support or not.
+        //todo Confirm that this actually improves desktop clicks.
+        //For some reason, switching from interact to click seemed to improve clicks. Might be placebo, since IIRC they both call click() in the end anyway in the API.
         if (main.isMobile) {
             currentObstacleObject.interact(currentObstacle.getAction(), currentObstacle.getName());
         } else { //possibly to improve desktop clicks.
             currentObstacleObject.click(currentObstacle.getAction(), currentObstacle.getName());
         }
 
+        //Wait until the player has interacted with the obstacle
         Condition.wait(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
@@ -90,6 +95,7 @@ public class InteractObstacle extends Task<ClientContext> {
             }
         }, 250, 20);
 
+        //Wait until the player has stopped interacting with the obstacle
         Condition.wait(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
@@ -98,20 +104,18 @@ public class InteractObstacle extends Task<ClientContext> {
             }
         }, 250, 40);
 
-        //Because sometimes it fails and kills webwalker otherwise, gets player coords -1-1-1
-        //Condition.sleep(1000); //todo replace this sleep with tile -1 -1 -1 check???
-
+        //Check if the player successfully did the obstacle, otherwise after 3 failed attemps move to a random tile on the roof the player is on for autocorrection.
         if (currentObstacle.getStartArea().containsOrIntersects(ctx.players.local().tile())) {
             System.out.println("[ERROR] : Obstacle failed! Adding +1...");
-            GC.FAILED_ATTEMPTS += 1;
-            GC.TOTAL_FAILED_CLICKS += 1;
-            GC.FAILED_OBSTACLES.add("[" + currentObstacle.getName() + " | " + main.course.getObstacleIndex(currentObstacle) + "]");
-            if (GC.FAILED_ATTEMPTS >= 3) {
+            GV.FAILED_ATTEMPTS += 1;
+            GV.TOTAL_FAILED_CLICKS += 1;
+            GV.FAILED_OBSTACLES.add("[" + currentObstacle.getName() + " | " + main.course.getObstacleIndex(currentObstacle) + "]");
+            if (GV.FAILED_ATTEMPTS >= 3) {
                 System.out.println("[ERROR] : Something is fucked and bricked the script. Not sure what. Trying to webwalk to obstacle.");
                 ctx.movement.step(currentObstacle.getStartArea().getRandomTile());
             }
         } else {
-            GC.FAILED_ATTEMPTS = 0;
+            GV.FAILED_ATTEMPTS = 0;
         }
     }
 }

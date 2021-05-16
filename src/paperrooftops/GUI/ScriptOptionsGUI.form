@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="7" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="5" left="10" bottom="5" right="10"/>
     <constraints>
-      <xy x="20" y="20" width="500" height="214"/>
+      <xy x="20" y="20" width="500" height="216"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -21,7 +21,6 @@
             <item value="Varrock"/>
             <item value="Canifis"/>
             <item value="Falador"/>
-            <item value="Seers"/>
           </model>
         </properties>
       </component>

@@ -3,8 +3,12 @@ package paperrooftops.utility;
 import java.util.ArrayList;
 import java.util.List;
 
-//todo move all of these global VARIABLES in to a global variables class instead of constants
-public class GC {
+//todo refractor names for better understandability.
+/*
+Notes:
+- GV stands for Global Variables.
+ */
+public class GV {
 
     public static int FAILED_ATTEMPTS = 0;
 

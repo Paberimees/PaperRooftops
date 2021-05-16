@@ -2,7 +2,7 @@ package paperrooftops.tasks;
 
 import org.powerbot.script.rt4.ClientContext;
 import paperrooftops.PaperRooftops;
-import paperrooftops.utility.GC;
+import paperrooftops.utility.GV;
 
 public class CheckHealth extends Task<ClientContext> {
 
@@ -12,7 +12,7 @@ public class CheckHealth extends Task<ClientContext> {
 
     @Override
     public boolean activate() {
-        return ctx.combat.health() < GC.HEALTH_MINIMUM;
+        return ctx.combat.health() < GV.HEALTH_MINIMUM;
     }
 
     @Override

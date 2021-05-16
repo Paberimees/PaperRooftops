@@ -3,7 +3,7 @@ package paperrooftops.tasks;
 import org.powerbot.script.Condition;
 import org.powerbot.script.rt4.ClientContext;
 import paperrooftops.PaperRooftops;
-import paperrooftops.utility.GC;
+import paperrooftops.utility.GV;
 
 import java.util.concurrent.Callable;
 
@@ -16,7 +16,7 @@ public class TurnOnRun extends Task<ClientContext> {
     @Override
     public boolean activate() {
         return !ctx.movement.running()
-                && ctx.movement.energyLevel() > GC.RUN_ENERGY_MINIMUM;
+                && ctx.movement.energyLevel() > GV.RUN_ENERGY_MINIMUM;
     }
 
     @Override
@@ -29,6 +29,6 @@ public class TurnOnRun extends Task<ClientContext> {
                 return ctx.movement.running();
             }
         }, 500, 10);
-        GC.randomizeRunEnergyMinimum();
+        GV.randomizeRunEnergyMinimum();
     }
 }

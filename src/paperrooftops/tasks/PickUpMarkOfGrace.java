@@ -5,7 +5,7 @@ import org.powerbot.script.Condition;
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.GroundItem;
 import paperrooftops.PaperRooftops;
-import paperrooftops.utility.GC;
+import paperrooftops.utility.GV;
 
 import java.util.concurrent.Callable;
 
@@ -38,8 +38,12 @@ public class PickUpMarkOfGrace extends Task<ClientContext> {
     public void execute() {
         System.out.println("[TASK] : PickUpMarkOfGrace");
         GroundItem markOfGrace = ctx.groundItems.toStream().name("Mark of grace").nearest().first();
-        main.currentMarkOfGrace = markOfGrace;
         final long markOfGraceCount = ctx.inventory.toStream().name("Mark of grace").count(true);
+
+        //Debug.
+        main.currentMarkOfGrace = markOfGrace;
+
+        //If the mark of grace is not in viewport, move and turn to it. Wait until player is not moving.
         if (!markOfGrace.inViewport()) {
             System.out.println("[LOG] : Mark of grace wasn't in viewport. Moving and trying again...");
             ctx.movement.step(markOfGrace);
@@ -52,33 +56,9 @@ public class PickUpMarkOfGrace extends Task<ClientContext> {
             }, 250, 20);
             return;
         }
-        /*
-        //New bounds due to misclicking bug.
-        //todo improve upon this. some marks are broken, some are not. probably need to implement markofgrace bounds to obstacle individually
 
-        if (!(ctx.players.local().tile().x() == markOfGrace.tile().x() && ctx.players.local().tile().y() == markOfGrace.tile().y() && ctx.players.local().tile().floor() == markOfGrace.tile().floor())) {
-            ctx.movement.step(markOfGrace.tile());
-            Condition.sleep(1000);
-            Condition.wait(new Callable<Boolean>() {
-                @Override
-                public Boolean call() throws Exception {
-                    return !ctx.players.local().inMotion();
-                }
-            }, 1000, 10);
-        }
-
-        //this markofgrace shit is broken
-        if (!(ctx.players.local().tile().x() == markOfGrace.tile().x() && ctx.players.local().tile().y() == markOfGrace.tile().y() && ctx.players.local().tile().floor() == markOfGrace.tile().floor())) {
-            System.out.println("[ERROR] : Fucking marks of graces, apparently im not standing right on top it.");
-            return;
-        }
-        int markTileHeight = ctx.game.tileHeight(markOfGrace.boundingModel().x(), markOfGrace.boundingModel().z());
-        int playerTileHeight = ctx.game.tileHeight(ctx.players.local().boundingModel().x(), ctx.players.local().boundingModel().z());
-        int tileHeightDiff = markTileHeight-playerTileHeight;
-        Condition.sleep(2500); //todo IMPROVE THIS? sleeping for a bit, because that tileheight function... it scared me
-        markOfGrace.bounds(-4, 4, -4+tileHeightDiff, 0+tileHeightDiff, -4, 4);
-*/
-        //todo fuck this look at Game.java for possibly faster calculations @api
+        //todo Investigate Game.java for possible faster calculation of y. Currently the y diff is calculated by hand and preset.
+        //Sets custom bounds for marks of grace on mobile depending on the floor the mark is on. Works /decently/ enough.
         if (main.isMobile) {
             if (markOfGrace.tile().floor() == 2) {
                 markOfGrace.bounds(new int[]{-4, 4, -144, -140, -4, 4});
@@ -87,24 +67,14 @@ public class PickUpMarkOfGrace extends Task<ClientContext> {
             }
         }
 
-        /*
-        //todo THIS IS FUCKING DOGSHIT. REMOVE THIS.
-        if (GC.CONCURRENT_FAILED_MARK_CLICKS >= 3 && GC.MARK_TILEHEIGHT_DIFF == 0) {
-            int markTileHeight = ctx.game.tileHeight(markOfGrace.boundingModel().x(), markOfGrace.boundingModel().z());
-            int playerTileHeight = ctx.game.tileHeight(ctx.players.local().boundingModel().x(), ctx.players.local().boundingModel().z());
-            GC.MARK_TILEHEIGHT_DIFF = markTileHeight-playerTileHeight;
-            Condition.sleep(2500); //todo IMPROVE THIS? sleeping for a bit, because that tileheight function... it scared me
-            //markOfGrace.bounds(-4, 4, -4+tileHeightDiff, 0+tileHeightDiff, -4, 4);
-            return;
-        } else {
-            markOfGrace.bounds(-4, 4, -4+GC.MARK_TILEHEIGHT_DIFF, 0+GC.MARK_TILEHEIGHT_DIFF, -4, 4);
-        }
-         */
+        //Clicking is more effective on desktop
         if (main.isMobile) {
             markOfGrace.interact("Take", "Mark of grace");
         } else {
             markOfGrace.click("Take", "Mark of grace");
         }
+
+        //Waits for the mark of grace to appear in the inventory.
         Condition.wait(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
@@ -112,11 +82,12 @@ public class PickUpMarkOfGrace extends Task<ClientContext> {
             }
         }, 250, 20);
 
+        //Checks if clicking the mark of grace failed or not.
         if (markOfGraceCount == ctx.inventory.toStream().name("Mark of grace").count(true)) {
-            GC.TOTAL_FAILED_MARK_CLICKS += 1;
-            GC.CONCURRENT_FAILED_MARK_CLICKS += 1;
+            GV.TOTAL_FAILED_MARK_CLICKS += 1;
+            GV.CONCURRENT_FAILED_MARK_CLICKS += 1;
         } else {
-            GC.CONCURRENT_FAILED_MARK_CLICKS = 0;
+            GV.CONCURRENT_FAILED_MARK_CLICKS = 0;
         }
     }
 

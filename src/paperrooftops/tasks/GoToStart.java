@@ -26,16 +26,21 @@ public class GoToStart extends Task<ClientContext> {
     public void execute() {
         System.out.println("[TASK] : GoToStart");
         Tile playerTile = ctx.players.local().tile();
+
+        //Check in case the player is still mid air etc. if this function fires. Could be added as task conditions, but would need to add it to all below-tasks aswell.
         if (playerTile.x() == -1 || playerTile.y() == -1 || playerTile.floor() == -1) {
             System.out.println("[ERROR] : Player tile coordinates included a -1! Trying again...");
             return;
         }
+
+        //Walk to start, web or not based on distance to start.
         Area startingArea = main.course.getStartingObstacle().getStartArea();
         int distanceToDestination = ctx.movement.distance(startingArea.getCentralTile(), ctx.players.local().tile());
-        if (distanceToDestination > 25 || distanceToDestination == -1) { //todo arbitrary 25, was 23 before; somehow improve upon this, don't want to resort to webwalker
-            //todo confirm for certain that webwalker doesn't need a wait condition. doesn't seem like it needs one.
+        if (distanceToDestination > 25 || distanceToDestination == -1) { //Arbitrary 25
+            //Webwalker
             ctx.movement.moveTo(startingArea.getRandomTile(), false, false);
         } else {
+            //Not webwalker
             ctx.movement.step(startingArea.getRandomTile());
             Condition.sleep(2000);
             Condition.wait(new Callable<Boolean>() {
@@ -45,7 +50,8 @@ public class GoToStart extends Task<ClientContext> {
                 }
             }, 250, 120);
         }
-        //todo The wait condition above was 15, worked well for most cases, this probably needs something better though. Webwalker used to bug out right near the start area, just waiting.
+
+        //Check for logging to console.
         if (!startingArea.containsOrIntersects(ctx.players.local().tile())) {
             System.out.println("[ERROR] : Walking to starting area failed! Trying again...");
             return;

@@ -7,6 +7,10 @@ import paperrooftops.utility.courses.*;
 
 import javax.swing.*;
 
+/*
+Notes:
+- Written with the help of IntelliJ form designer, that's why it looks a bit better.
+ */
 public class ScriptOptionsGUI extends JFrame {
     private JPanel mainPanel;
     private JList courseList;
@@ -35,16 +39,13 @@ public class ScriptOptionsGUI extends JFrame {
         //Course list
         courseList.setSelectedIndex(0);
 
-        //Hp checkbox
-        //hpCheckBox.addActionListener((event)->hpCheckBoxAction());
-
         //Start button
         startButton.addActionListener((event)->finishSetup());
     }
 
     private void finishSetup() {
-        //todo add debugmode option to gui
-        boolean debugMode = false; //THIS SHOULD BE AN OPTION IN THE GUI
+        //Hey! This variable should be an option in the GUI and should be removed!
+        boolean debugMode = false;
 
         String value = courseList.getSelectedValue().toString();
         switch (value) {
@@ -89,17 +90,4 @@ public class ScriptOptionsGUI extends JFrame {
         main.setStartScript(true);
         this.dispose();
     }
-
-    /*
-    public void hpCheckBoxAction() {
-        if (hpCheckBox.isSelected()) {
-            hpFormattedTextField.setEnabled(true);
-            hpFormattedTextField.setEditable(true);
-            return;
-        }
-        hpFormattedTextField.setEnabled(false);
-        hpFormattedTextField.setEditable(false);
-    }
-     */
-
 }

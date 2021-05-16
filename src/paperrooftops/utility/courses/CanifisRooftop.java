@@ -17,12 +17,8 @@ public class CanifisRooftop extends Course {
     public CanifisRooftop() {
         courseName = "Canifis rooftop";
         levelRequirement = 40;
-        //Adding all the course obstacles one by one.
-        //Every obstacle seems to change places when going from desktop -> mobile.
-        //Anyways, the misclicks seems to be going below, so maybe raise up bounding models and see what happens?
-        //todo fix misclicks
-        //todo enlarge starting area!!!
 
+        //Adding all the course obstacles one by one.
         int[] defaultBounds = {-12, 12, -128, -112, -12, 12};
         int[] defaultBoundsPoleVault = {-12, 12, -152, -136, -12, 12};
         int[] defaultBounds3 = {-12, 12, -96, -80, -12, 12};
