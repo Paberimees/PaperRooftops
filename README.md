@@ -1,5 +1,5 @@
-PaperRooftops - made for mobile.
+PaperRooftops - made for mobile; but usable on desktop - probably.
 
-Tested using Powbot mobile with LDPlayer.
+Tested using Powbot mobile with LDPlayer - ran fairly smooth. Has some error correction built in to it.
 
-Probably doesn't work on desktop, due to the bounds being different. Probably would work on desktop, if no custom bounds are set. Just don't want to test on desktop with any members account just quite yet, due to probably fast ban.
+Currently testing with desktop; Seems like it does require some custom bounds aswell, as it had trouble with clicking varrock rooftop Gap earlier.
