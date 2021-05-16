@@ -52,7 +52,9 @@ public class DebugTask extends Task<ClientContext> {
             return;
         }
 
-        currentObstacleObject.bounds(currentObstacle.getBounds());
+        if (main.isMobile) {
+            currentObstacleObject.bounds(currentObstacle.getBounds());
+        }
 
         Condition.sleep(1000);
     }

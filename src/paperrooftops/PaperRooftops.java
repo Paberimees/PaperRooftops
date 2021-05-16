@@ -20,7 +20,7 @@ import java.util.List;
 Notes:
 - sout - Why? Monkey log doesn't work for me. Use cmd.exe and "java -Xmx1536M -jar PowBot.jar" to get the log.
  */
-@Script.Manifest(name = "ZillaAgility", description = "Does some jumpy and runny stuff", version = "0.1")
+@Script.Manifest(name = "PaperRooftops", description = "Paperman on the rooftops", version = "0.1")
 public class PaperRooftops extends PollingScript<ClientContext> implements PaintListener {
 
     //Functionality variables
@@ -73,8 +73,8 @@ public class PaperRooftops extends PollingScript<ClientContext> implements Paint
 
     @Override
     public void repaint(Graphics g) {
-        //todo with the if statement there, doesn't draw graphics.
-        /*
+
+        //Debug mode bounds wireframe drawing. If debugMode=true, it doesn't draw the stats window.
         if (debugMode) {
             g.setColor(new Color(0, 255, 0));
             if (currentGameObject != null) {
@@ -88,7 +88,7 @@ public class PaperRooftops extends PollingScript<ClientContext> implements Paint
             }
             return;
         }
-        */
+
         //UI mostly for desktop painting
         long currentAgilityXP = ctx.skills.experience(Constants.SKILLS_AGILITY);
         long gainedAgilityXP = currentAgilityXP - startAgilityXP;

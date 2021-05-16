@@ -86,7 +86,7 @@ public class ScriptOptionsGUI extends JFrame {
             new DebugTileHeightGUI(ctx, main);
         }
 
-
+        main.setDebugMode(debugMode);
         main.setStartScript(true);
         this.dispose();
     }
