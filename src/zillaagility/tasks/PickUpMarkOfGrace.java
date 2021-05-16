@@ -49,7 +49,7 @@ public class PickUpMarkOfGrace extends Task<ClientContext> {
                 public Boolean call() throws Exception {
                     return !ctx.players.local().inMotion();
                 }
-            }, 250, 40);
+            }, 250, 20);
             return;
         }
         /*
@@ -110,7 +110,7 @@ public class PickUpMarkOfGrace extends Task<ClientContext> {
             public Boolean call() throws Exception {
                 return markOfGraceCount < ctx.inventory.toStream().name("Mark of grace").count(true);
             }
-        }, 250, 40);
+        }, 250, 20);
 
         if (markOfGraceCount == ctx.inventory.toStream().name("Mark of grace").count(true)) {
             GC.TOTAL_FAILED_MARK_CLICKS += 1;
