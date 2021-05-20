@@ -70,7 +70,22 @@ public class CanifisRooftop extends Course {
                 defaultBounds,
                 new Area(new Tile(3506, 3473,2), new Tile(3517, 3484,2)), //2
                 14897));
+
+        /*
+        //FOR TESTING PURPOSES FOR NOW.
+        //TODO DESKTOP - MAKE THIS BETTER (CONSTRUCTOR)
+        trackList.get(0).setDesktopTileHeightDifference(-17);
+        trackList.get(1).setDesktopTileHeightDifference(-103);
+        trackList.get(2).setDesktopTileHeightDifference(-136);
+        trackList.get(3).setDesktopTileHeightDifference(-136);
+        trackList.get(4).setDesktopTileHeightDifference(0);
+        trackList.get(5).setDesktopTileHeightDifference(-151);
+        trackList.get(6).setDesktopTileHeightDifference(-7);
+        trackList.get(7).setDesktopTileHeightDifference(-97);
+
+         */
     }
+
 
     @Override
     public Obstacle getCurrentObstacle(Locatable x) {

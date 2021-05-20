@@ -32,6 +32,7 @@ public class PaperRooftops extends PollingScript<ClientContext> implements Paint
 
     //UI mostly for desktop variables
     public int startAgilityXP;
+    public int startAgilityLevel;
     private final Font helveticaFont = new Font("Helvetica", 0, 12);
 
     //This is debug
@@ -39,6 +40,7 @@ public class PaperRooftops extends PollingScript<ClientContext> implements Paint
     public GroundItem currentMarkOfGrace;
     public int currentMarkOfGraceTileHeight;
     public int currentGameObjectTileHeight;
+    public boolean drawBoundingModelWireFrames = true;
 
     //todo FEATURE: Option to eat food when low.
     //todo FEATURE: Automatic viewport zooming out/correction.
@@ -53,6 +55,7 @@ public class PaperRooftops extends PollingScript<ClientContext> implements Paint
         isMobile = ctx.client().isMobile();
         //UI mostly for desktop variables values
         startAgilityXP = ctx.skills.experience(Constants.SKILLS_AGILITY);
+        startAgilityLevel = ctx.skills.level(Constants.SKILLS_AGILITY);
         //Opens up the GUI
         new ScriptOptionsGUI(ctx, this);
     }
@@ -76,15 +79,17 @@ public class PaperRooftops extends PollingScript<ClientContext> implements Paint
 
         //Debug mode bounds wireframe drawing. If debugMode=true, it doesn't draw the stats window.
         if (debugMode) {
-            g.setColor(new Color(0, 255, 0));
-            if (currentGameObject != null) {
-                currentGameObject.boundingModel().drawWireFrame(g);
-            }
-            if (currentMarkOfGrace != null) {
-                currentMarkOfGrace.boundingModel().drawWireFrame(g);
-            } else {
-                currentGameObjectTileHeight = 69;
-                currentMarkOfGraceTileHeight = 69;
+            if (drawBoundingModelWireFrames) {
+                g.setColor(new Color(0, 255, 0));
+                if (currentGameObject != null) {
+                    currentGameObject.boundingModel().drawWireFrame(g);
+                }
+                if (currentMarkOfGrace != null) {
+                    currentMarkOfGrace.boundingModel().drawWireFrame(g);
+                } else {
+                    currentGameObjectTileHeight = 69;
+                    currentMarkOfGraceTileHeight = 69;
+                }
             }
             return;
         }
@@ -94,16 +99,18 @@ public class PaperRooftops extends PollingScript<ClientContext> implements Paint
         long gainedAgilityXP = currentAgilityXP - startAgilityXP;
 
         //Window
+        /*
         g.setColor(new Color(0, 0, 0,255));
         g.drawRect(5,5,175,80);
         g.setColor(new Color(33, 33, 33, 230));
         g.fillRect(5,5,175,80);
-
+         */
         //Info
         g.setFont(helveticaFont);
-        g.setColor(new Color(172, 172, 172,255));
-        g.drawString("Agility exp. gained: " + gainedAgilityXP, 8, 25);
-        g.drawString("Time running: " + formatTime((int)this.getRuntime()/1000), 8, 60);
+        g.setColor(new Color(0, 0, 0,255));
+        g.drawString("Runtime: " + formatTime((int)this.getRuntime()/1000), 8, 250);
+        g.drawString("Exp. gained: " + gainedAgilityXP, 8, 264);
+        g.drawString("Levels: " + ctx.skills.level(Constants.SKILLS_AGILITY) + " +" + (ctx.skills.level(Constants.SKILLS_AGILITY)-startAgilityLevel), 8, 278);
     }
 
     private String formatTime(int secs) {

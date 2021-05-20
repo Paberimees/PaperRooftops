@@ -17,6 +17,9 @@ public class FaladorRooftop extends Course {
         courseName = "Falador rooftop";
         levelRequirement = 50;
 
+        //Desktop bounds?
+        //Hand holds - {-12, 12, 354, 362, -108, -88}
+
         //todo refractor
         //Mobile bounds for obstacles.
         int[] debug_10 = {-32, 32, -124, -60, -32, 32}; //ledge

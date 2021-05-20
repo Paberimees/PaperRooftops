@@ -60,9 +60,16 @@ public class InteractObstacle extends Task<ClientContext> {
         System.out.println("[LOG] : GameObject: " + currentObstacleObject.name() + " " + currentObstacleObject.id());
 
         //Sets custom bounds for mobile objects.
-        if (main.isMobile || main.course.getStartingObstacle() == currentObstacle) { //starting obstacles are walls etc that are hard to click and might improve desktop support
+        if (main.isMobile || main.course.getStartingObstacle() == currentObstacle) { //|| main.course.getStartingObstacle() == currentObstacle //starting obstacles are walls etc that are hard to click and might improve desktop support
             currentObstacleObject.bounds(currentObstacle.getBounds());
-        }
+        } /*else {
+            if (currentObstacle.getDesktopTileHeightDifference() != 0) {
+                int[] desktopBounds = currentObstacle.getBounds();
+                desktopBounds[2] = desktopBounds[2] - currentObstacle.getDesktopTileHeightDifference();
+                desktopBounds[3] = desktopBounds[3] - currentObstacle.getDesktopTileHeightDifference();
+                currentObstacleObject.bounds(desktopBounds);
+            }
+        }*/
         // ^ Else - use desktop bounds. Experimented with smaller bounds, but they stall stay default as is for now, except the first obstacle (Walls to climb up)
 
         //If the current obstacle is not in viewport, move and turn to it, wait until player is not in motion, return.

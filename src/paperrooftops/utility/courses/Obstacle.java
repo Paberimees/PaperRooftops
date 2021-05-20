@@ -11,6 +11,7 @@ public class Obstacle {
     private int[] bounds;
     private Area startArea;
     private int id;
+    //private int desktopTileHeightDifference = 0;
 
     public Obstacle(String action, String name, int[] bounds, Area startArea, int id) {
         this.action = action;
@@ -26,6 +27,18 @@ public class Obstacle {
         this.startArea = startArea;
         this.id = -1;
     }
+
+    /*
+    //TODO DESKTOP ADD TO CONSTRUCTOR
+    public void setDesktopTileHeightDifference(int diff) {
+        desktopTileHeightDifference = diff;
+    }
+
+    public int getDesktopTileHeightDifference() {
+        return desktopTileHeightDifference;
+    }
+
+     */
 
     public String getAction() {
         return action;

@@ -53,6 +53,7 @@ public class DebugTileHeightGUI {
         obstacleDataPanel.add(obstacleDataPanelLower);
         dataPanel.add(obstacleDataPanel);
 
+        //Buttons and buttons panel.
         JButton getDataButton = new JButton("Pull TileHeights");
         getDataButton.addActionListener(new ActionListener() {
             @Override
@@ -69,8 +70,25 @@ public class DebugTileHeightGUI {
             }
         });
 
+        JButton toggleWireFramesButton = new JButton("Toggle wireframes");
+        toggleWireFramesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (main.drawBoundingModelWireFrames) {
+                    main.drawBoundingModelWireFrames = false;
+                    return;
+                }
+                main.drawBoundingModelWireFrames = true;
+            }
+        });
+
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new GridLayout(1,2));
+        buttonsPanel.add(toggleWireFramesButton);
+        buttonsPanel.add(getDataButton);
+
         mainFrame.add(dataPanel);
-        mainFrame.add(getDataButton);
+        mainFrame.add(buttonsPanel);
 
         mainFrame.setSize(320, 240);
         mainFrame.setLayout(new GridLayout(2,2));
