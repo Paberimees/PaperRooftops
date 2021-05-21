@@ -95,7 +95,9 @@ public class InteractObstacle extends Task<ClientContext> {
         } else { //possibly to improve desktop clicks.
             //currentObstacleObject.click(currentObstacle.getAction(), currentObstacle.getName());
             System.out.println("Interacting, not clicking! " + currentObstacle.getAction());
-            currentObstacleObject.click(true);
+            //Condition.sleep(3000);
+            //currentObstacleObject.click(true);
+            currentObstacleObject.interact(currentObstacle.getAction(), currentObstacle.getName());
         }
 
         //Wait until the player has interacted with the obstacle

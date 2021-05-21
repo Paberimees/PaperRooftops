@@ -6,6 +6,8 @@ import paperrooftops.tasks.*;
 import paperrooftops.utility.courses.*;
 
 import javax.swing.*;
+import java.awt.*;
+import java.net.URL;
 
 /*
 Notes:
@@ -16,6 +18,7 @@ public class ScriptOptionsGUI extends JFrame {
     private JList courseList;
     private JButton startButton;
     private JLabel courseHeader;
+    private JLabel mainHeader;
 
     private ClientContext ctx;
     private PaperRooftops main;
@@ -41,6 +44,9 @@ public class ScriptOptionsGUI extends JFrame {
 
         //Start button
         startButton.addActionListener((event)->finishSetup());
+
+        //Test
+        //System.out.println(main.getClass().getPackageName());
     }
 
     private void finishSetup() {

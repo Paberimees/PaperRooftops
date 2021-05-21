@@ -1,5 +1,6 @@
 package paperrooftops;
 
+import org.powerbot.script.Condition;
 import org.powerbot.script.PaintListener;
 import org.powerbot.script.PollingScript;
 import org.powerbot.script.Script;
@@ -15,6 +16,7 @@ import paperrooftops.utility.courses.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /*
 Notes:
@@ -98,13 +100,6 @@ public class PaperRooftops extends PollingScript<ClientContext> implements Paint
         long currentAgilityXP = ctx.skills.experience(Constants.SKILLS_AGILITY);
         long gainedAgilityXP = currentAgilityXP - startAgilityXP;
 
-        //Window
-        /*
-        g.setColor(new Color(0, 0, 0,255));
-        g.drawRect(5,5,175,80);
-        g.setColor(new Color(33, 33, 33, 230));
-        g.fillRect(5,5,175,80);
-         */
         //Info
         g.setFont(helveticaFont);
         g.setColor(new Color(0, 0, 0,255));
