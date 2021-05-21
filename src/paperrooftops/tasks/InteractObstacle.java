@@ -1,6 +1,8 @@
 package paperrooftops.tasks;
 
 import org.powerbot.script.Condition;
+import org.powerbot.script.Filter;
+import org.powerbot.script.MenuCommand;
 import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.GameObject;
@@ -91,7 +93,9 @@ public class InteractObstacle extends Task<ClientContext> {
         if (main.isMobile) {
             currentObstacleObject.interact(currentObstacle.getAction(), currentObstacle.getName());
         } else { //possibly to improve desktop clicks.
-            currentObstacleObject.click(currentObstacle.getAction(), currentObstacle.getName());
+            //currentObstacleObject.click(currentObstacle.getAction(), currentObstacle.getName());
+            System.out.println("Interacting, not clicking! " + currentObstacle.getAction());
+            currentObstacleObject.click(true);
         }
 
         //Wait until the player has interacted with the obstacle
