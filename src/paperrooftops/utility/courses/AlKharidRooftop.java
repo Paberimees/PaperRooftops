@@ -34,6 +34,20 @@ public class AlKharidRooftop extends Course {
                 new Area(new Tile(3311, 3187,3), new Tile(3319, 3179, 3))));
         trackList.add(new Obstacle("Jump", "Gap", new int[]{-16, 16, -48, -16, -16, 16},
                 new Area(new Tile(3295, 3196,3), new Tile(3307, 3183, 3))));
+
+        //Temporary (?)
+        //Desktop bounds
+
+        int[] debugBounds1 = new int[]{-16,16,-4,0,-16,16};
+        int[] debugBounds2 = new int[]{-16,16,-48,-16,-16,16};
+
+        trackList.get(1).setDesktopBounds(debugBounds1);
+        trackList.get(2).setDesktopBounds(debugBounds2);
+        trackList.get(3).setDesktopBounds(debugBounds1);
+        trackList.get(4).setDesktopBounds(debugBounds2);
+        trackList.get(5).setDesktopBounds(new int[]{-36,56,-48,-40,56,64}); //roof top beams
+        trackList.get(6).setDesktopBounds(debugBounds1);
+        trackList.get(7).setDesktopBounds(debugBounds1);
     }
 
     @Override

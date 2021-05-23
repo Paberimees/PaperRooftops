@@ -9,6 +9,7 @@ public class Obstacle {
     private String action;
     private String name;
     private int[] bounds;
+    private int[] desktopBounds;
     private Area startArea;
     private int id;
     //private int desktopTileHeightDifference = 0;
@@ -26,6 +27,14 @@ public class Obstacle {
         this.bounds = bounds;
         this.startArea = startArea;
         this.id = -1;
+    }
+
+    public void setDesktopBounds(int[] desktopBounds) {
+        this.desktopBounds = desktopBounds;
+    }
+
+    public int[] getDesktopBounds() {
+        return desktopBounds;
     }
 
     /*

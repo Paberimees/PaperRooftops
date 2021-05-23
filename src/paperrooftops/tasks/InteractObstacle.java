@@ -64,7 +64,10 @@ public class InteractObstacle extends Task<ClientContext> {
         //Sets custom bounds for mobile objects.
         if (main.isMobile || main.course.getStartingObstacle() == currentObstacle) { //|| main.course.getStartingObstacle() == currentObstacle //starting obstacles are walls etc that are hard to click and might improve desktop support
             currentObstacleObject.bounds(currentObstacle.getBounds());
-        } /*else {
+        } else if (currentObstacle.getDesktopBounds() != null) {
+            currentObstacleObject.bounds(currentObstacle.getDesktopBounds());
+        }
+        /*else {
             if (currentObstacle.getDesktopTileHeightDifference() != 0) {
                 int[] desktopBounds = currentObstacle.getBounds();
                 desktopBounds[2] = desktopBounds[2] - currentObstacle.getDesktopTileHeightDifference();
