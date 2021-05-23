@@ -105,7 +105,7 @@ public class PaperRooftops extends PollingScript<ClientContext> implements Paint
         g.setColor(new Color(0, 0, 0,255));
         g.drawString("Runtime: " + formatTime((int)this.getRuntime()/1000), 8, 250);
         g.drawString("Exp. gained: " + gainedAgilityXP, 8, 264);
-        g.drawString("Exp. till lvl: " + (ctx.skills.experienceAt(ctx.skills.level(Constants.SKILLS_AGILITY))-ctx.skills.experience(Constants.SKILLS_AGILITY)),8,278);
+        g.drawString("Exp. till lvl: " + (ctx.skills.experienceAt(ctx.skills.level(Constants.SKILLS_AGILITY)+1)-ctx.skills.experience(Constants.SKILLS_AGILITY)),8,278);
         g.drawString("Levels: " + ctx.skills.level(Constants.SKILLS_AGILITY) + " +" + (ctx.skills.level(Constants.SKILLS_AGILITY)-startAgilityLevel), 8, 292);
     }
 

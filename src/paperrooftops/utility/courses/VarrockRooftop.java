@@ -69,6 +69,21 @@ public class VarrockRooftop extends Course {
                 "Edge",
                 new int[]{-16, 16, -48, -16, -16, 16},
                 new Area(new Tile(3235, 3409,3), new Tile(3241, 3417, 3)))); //3
+
+        //Temporary (?)
+        //Desktop bounds
+
+        int[] debugBounds1 = new int[]{-16,16,-4,0,-16,16};
+        int[] debugBounds2 = new int[]{-16,16,-48,-16,-16,16};
+
+        trackList.get(1).setDesktopBounds(debugBounds1);
+        trackList.get(2).setDesktopBounds(debugBounds1);
+        trackList.get(3).setDesktopBounds(debugBounds1);
+        trackList.get(4).setDesktopBounds(debugBounds2);
+        trackList.get(5).setDesktopBounds(debugBounds1); //roof top beams
+        trackList.get(6).setDesktopBounds(debugBounds1);
+        trackList.get(7).setDesktopBounds(debugBounds2);
+        trackList.get(8).setDesktopBounds(debugBounds1);
     }
 
     @Override
