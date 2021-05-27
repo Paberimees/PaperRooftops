@@ -80,6 +80,9 @@ public class InteractObstacle extends Task<ClientContext> {
         //If the current obstacle is not in viewport, move and turn to it, wait until player is not in motion, return.
         if (!currentObstacleObject.inViewport()) {
             System.out.println("[LOG] : Current obstacle was not in viewport. Moving and returning...");
+            System.out.println(currentObstacleObject); //todo DEBUG DEBUG DEBUG
+            System.out.println(currentObstacleObject.tile().x() + " " + currentObstacleObject.tile().y() + " " + currentObstacleObject.tile().floor()); //todo DEBUG DEBUG DEBUG
+            System.out.println(main.course.getCurrentObstacle(ctx.players.local().tile())); //todo DEBUG DEBUG DEBUG
             ctx.movement.step(currentObstacleObject);
             ctx.camera.turnTo(currentObstacleObject);
             Condition.wait(new Callable<Boolean>() {

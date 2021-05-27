@@ -34,7 +34,7 @@ public class FaladorRooftop extends Course {
         trackList.add(new Obstacle("Cross",
                 "Tightrope",
                 new int[]{-32, 32, -65, -61, -32, 32},
-                new Area(new Tile(3034, 3348,3), new Tile(3041, 3341, 3)))); //3
+                new Area(new Tile(3034, 3348,3), new Tile(3041, 3341, 3)))); //3 //todo debug, using ID doesn't work! using containsorintersects doesnt work!
         trackList.add(new Obstacle("Cross",
                 "Hand holds",
                 new int[]{-16, 16, -112, -80, -16, 16}, //todo even though this should be correct, manages to get misclicks. find out more about this and fix it. bounds are 32y smaller than on desktop too.
