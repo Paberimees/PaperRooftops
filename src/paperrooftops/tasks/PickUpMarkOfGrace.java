@@ -48,12 +48,7 @@ public class PickUpMarkOfGrace extends Task<ClientContext> {
             System.out.println("[LOG] : Mark of grace wasn't in viewport. Moving and trying again...");
             ctx.movement.step(markOfGrace);
             ctx.camera.turnTo(markOfGrace);
-            Condition.wait(new Callable<Boolean>() {
-                @Override
-                public Boolean call() throws Exception {
-                    return !ctx.players.local().inMotion();
-                }
-            }, 250, 20);
+            Condition.wait(()->!ctx.players.local().inMotion(), 250, 20);
             return;
         }
 
@@ -67,12 +62,8 @@ public class PickUpMarkOfGrace extends Task<ClientContext> {
             }
         }
 
-        //Clicking is more effective on desktop
-        if (main.isMobile) {
-            markOfGrace.interact("Take", "Mark of grace");
-        } else {
-            markOfGrace.click("Take", "Mark of grace");
-        }
+        //Try to pick it up
+        markOfGrace.interact("Take", "Mark of grace");
 
         //Waits for the mark of grace to appear in the inventory.
         Condition.wait(new Callable<Boolean>() {

@@ -4,20 +4,12 @@ import org.powerbot.script.Area;
 import org.powerbot.script.Locatable;
 import org.powerbot.script.Tile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class AlKharidRooftop extends Course {
 
-    private String courseName;
-    private int levelRequirement;
-    private List<Obstacle> trackList = new ArrayList<>();
-
-    //todo use debug tool to fix bounds
     public AlKharidRooftop() {
         courseName = "Al Kharid rooftop";
         levelRequirement = 20;
-        //todo check floors 1 and 2 for mark of grace pickup, could be fucked.
+
         trackList.add(new Obstacle("Climb", "Rough wall", new int[]{-12,16,-172,-132,-60, -56},
                 new Area(new Tile(3270, 3195, 0), new Tile(3278, 3199,0))));
         trackList.add(new Obstacle("Cross", "Tightrope", new int[]{-16, 16, -4, 0, -16, 16},
@@ -37,10 +29,8 @@ public class AlKharidRooftop extends Course {
 
         //Temporary (?)
         //Desktop bounds
-
         int[] debugBounds1 = new int[]{-16,16,-4,0,-16,16};
         int[] debugBounds2 = new int[]{-16,16,-48,-16,-16,16};
-
         trackList.get(1).setDesktopBounds(debugBounds1);
         trackList.get(2).setDesktopBounds(debugBounds2);
         trackList.get(3).setDesktopBounds(debugBounds1);
@@ -48,28 +38,5 @@ public class AlKharidRooftop extends Course {
         trackList.get(5).setDesktopBounds(new int[]{-36,56,-48,-40,56,64}); //roof top beams
         trackList.get(6).setDesktopBounds(debugBounds1);
         trackList.get(7).setDesktopBounds(debugBounds1);
-    }
-
-    @Override
-    public Obstacle getCurrentObstacle(Locatable x) {
-        if (trackList.stream().anyMatch((obs) -> obs.getStartArea().containsOrIntersects(x))) {
-            return trackList.stream().filter((obs) -> obs.getStartArea().containsOrIntersects(x)).findFirst().get();
-        }
-        return null;
-    }
-
-    @Override
-    public Obstacle getStartingObstacle() {
-        return trackList.get(0);
-    }
-
-    @Override
-    public String getName() {
-        return courseName;
-    }
-
-    @Override
-    public int getObstacleIndex(Obstacle obstacle) {
-        return trackList.indexOf(obstacle);
     }
 }

@@ -48,6 +48,7 @@ public class PaperRooftops extends PollingScript<ClientContext> implements Paint
     //todo FEATURE: Automatic viewport zooming out/correction.
     //todo FEATURE: Agility level check for courses.
     //todo FEATURE: Option to choose debug mode from GUI.
+    //todo FEATURE: Logout when at Lumbridge.
     //todo BUGFIX: Course marks are still a little iffy on mobile. Fix could possibly be including y TileHeight offset in Obstacle for calculating MoG bounds?
     //todo BUGFIX: Enable Seers course && it needs a preset path, because Webwalking to starting area takes a massive detour.
     @Override

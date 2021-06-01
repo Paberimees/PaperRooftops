@@ -1,25 +1,16 @@
 package paperrooftops.utility.courses;
 
 import org.powerbot.script.Area;
-import org.powerbot.script.Locatable;
 import org.powerbot.script.Tile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class VarrockRooftop extends Course {
-
-    private String courseName;
-    private int levelRequirement;
-    private List<Obstacle> trackList = new ArrayList<>();
 
     //todo use debug tool to fix bounds.
     public VarrockRooftop() {
         courseName = "Varrock rooftop";
         levelRequirement = 30;
+
         //Adding all the course obstacles one by one, where the first obstacle added is the course start.
-        //todo used to have a weird bug where it would brick up right after balance wall, monkey would send clicks on next obstacle but nothing was happening. is it next obstacle bounds error? edit: same obstacle bricks desktop with default bounds.
-        //todo sometimes ctx.movement.step misclicks for some reason, not sure why.
         trackList.add(new Obstacle("Climb",
                 "Rough wall",
                 new int[]{-44, -40, -180, -144, -20, 8},
@@ -72,10 +63,8 @@ public class VarrockRooftop extends Course {
 
         //Temporary (?)
         //Desktop bounds
-
         int[] debugBounds1 = new int[]{-16,16,-4,0,-16,16};
         int[] debugBounds2 = new int[]{-16,16,-48,-16,-16,16};
-
         trackList.get(1).setDesktopBounds(debugBounds1);
         trackList.get(2).setDesktopBounds(debugBounds1);
         trackList.get(3).setDesktopBounds(debugBounds1);
@@ -84,28 +73,5 @@ public class VarrockRooftop extends Course {
         trackList.get(6).setDesktopBounds(debugBounds1);
         trackList.get(7).setDesktopBounds(debugBounds2);
         trackList.get(8).setDesktopBounds(debugBounds1);
-    }
-
-    @Override
-    public Obstacle getCurrentObstacle(Locatable x) {
-        if (trackList.stream().anyMatch((obs) -> obs.getStartArea().containsOrIntersects(x))) {
-            return trackList.stream().filter((obs) -> obs.getStartArea().containsOrIntersects(x)).findFirst().get();
-        }
-        return null;
-    }
-
-    @Override
-    public Obstacle getStartingObstacle() {
-        return trackList.get(0);
-    }
-
-    @Override
-    public String getName() {
-        return courseName;
-    }
-
-    @Override
-    public int getObstacleIndex(Obstacle obstacle) {
-        return trackList.indexOf(obstacle);
     }
 }

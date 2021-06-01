@@ -67,22 +67,10 @@ public class InteractObstacle extends Task<ClientContext> {
         } else if (currentObstacle.getDesktopBounds() != null) {
             currentObstacleObject.bounds(currentObstacle.getDesktopBounds());
         }
-        /*else {
-            if (currentObstacle.getDesktopTileHeightDifference() != 0) {
-                int[] desktopBounds = currentObstacle.getBounds();
-                desktopBounds[2] = desktopBounds[2] - currentObstacle.getDesktopTileHeightDifference();
-                desktopBounds[3] = desktopBounds[3] - currentObstacle.getDesktopTileHeightDifference();
-                currentObstacleObject.bounds(desktopBounds);
-            }
-        }*/
-        // ^ Else - use desktop bounds. Experimented with smaller bounds, but they stall stay default as is for now, except the first obstacle (Walls to climb up)
 
         //If the current obstacle is not in viewport, move and turn to it, wait until player is not in motion, return.
         if (!currentObstacleObject.inViewport()) {
             System.out.println("[LOG] : Current obstacle was not in viewport. Moving and returning...");
-            System.out.println(currentObstacleObject); //todo DEBUG DEBUG DEBUG
-            System.out.println(currentObstacleObject.tile().x() + " " + currentObstacleObject.tile().y() + " " + currentObstacleObject.tile().floor()); //todo DEBUG DEBUG DEBUG
-            System.out.println(main.course.getCurrentObstacle(ctx.players.local().tile())); //todo DEBUG DEBUG DEBUG
             ctx.movement.step(currentObstacleObject);
             ctx.camera.turnTo(currentObstacleObject);
             Condition.wait(new Callable<Boolean>() {
@@ -94,18 +82,10 @@ public class InteractObstacle extends Task<ClientContext> {
             return;
         }
 
-        //todo Confirm that this actually improves desktop clicks.
-        //For some reason, switching from interact to click seemed to improve clicks. Might be placebo, since IIRC they both call click() in the end anyway in the API.
-        if (main.isMobile) {
-            currentObstacleObject.interact(currentObstacle.getAction(), currentObstacle.getName());
-        } else { //possibly to improve desktop clicks.
-            //currentObstacleObject.click(currentObstacle.getAction(), currentObstacle.getName());
-            System.out.println("Interacting, not clicking! " + currentObstacle.getAction());
-            //Condition.sleep(3000);
-            //currentObstacleObject.click(true);
-            currentObstacleObject.interact(currentObstacle.getAction(), currentObstacle.getName());
-        }
+        //Interact with the obstacle
+        currentObstacleObject.interact(currentObstacle.getAction(), currentObstacle.getName());
 
+        //Note: the below code can be shortened to an if statement with Condition.waits instead of area checking, but it's fine as it is.
         //Wait until the player has interacted with the obstacle
         Condition.wait(new Callable<Boolean>() {
             @Override
@@ -130,8 +110,9 @@ public class InteractObstacle extends Task<ClientContext> {
             GV.TOTAL_FAILED_CLICKS += 1;
             GV.FAILED_OBSTACLES.add("[" + currentObstacle.getName() + " | " + main.course.getObstacleIndex(currentObstacle) + "]");
             if (GV.FAILED_ATTEMPTS >= 3) {
-                System.out.println("[ERROR] : Something is fucked and bricked the script. Not sure what. Trying to webwalk to obstacle.");
+                System.out.println("[ERROR] : Something went wrong with the script :( Trying to step to obstacle.");
                 ctx.movement.step(currentObstacle.getStartArea().getRandomTile());
+                ctx.camera.turnTo(currentObstacleObject);
             }
         } else {
             GV.FAILED_ATTEMPTS = 0;

@@ -1,17 +1,9 @@
 package paperrooftops.utility.courses;
 
 import org.powerbot.script.Area;
-import org.powerbot.script.Locatable;
 import org.powerbot.script.Tile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CanifisRooftop extends Course {
-
-    private String courseName;
-    private int levelRequirement;
-    private List<Obstacle> trackList = new ArrayList<>();
 
     //todo use debug tool to fix bounds
     public CanifisRooftop() {
@@ -84,29 +76,5 @@ public class CanifisRooftop extends Course {
         trackList.get(7).setDesktopTileHeightDifference(-97);
 
          */
-    }
-
-
-    @Override
-    public Obstacle getCurrentObstacle(Locatable x) {
-        if (trackList.stream().anyMatch((obs) -> obs.getStartArea().containsOrIntersects(x))) {
-            return trackList.stream().filter((obs) -> obs.getStartArea().containsOrIntersects(x)).findFirst().get();
-        }
-        return null;
-    }
-
-    @Override
-    public Obstacle getStartingObstacle() {
-        return trackList.get(0);
-    }
-
-    @Override
-    public String getName() {
-        return courseName;
-    }
-
-    @Override
-    public int getObstacleIndex(Obstacle obstacle) {
-        return trackList.indexOf(obstacle);
     }
 }

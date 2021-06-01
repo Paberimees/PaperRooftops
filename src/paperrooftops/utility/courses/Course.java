@@ -2,14 +2,32 @@ package paperrooftops.utility.courses;
 
 import org.powerbot.script.Locatable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Course {
 
-    public abstract Obstacle getCurrentObstacle(Locatable x);
+    String courseName;
+    int levelRequirement;
+    List<Obstacle> trackList = new ArrayList<>();
 
-    public abstract Obstacle getStartingObstacle();
+    public Obstacle getCurrentObstacle(Locatable x) {
+        if (trackList.stream().anyMatch((obs) -> obs.getStartArea().containsOrIntersects(x))) {
+            return trackList.stream().filter((obs) -> obs.getStartArea().containsOrIntersects(x)).findFirst().get();
+        }
+        return null;
+    }
 
-    public abstract int getObstacleIndex(Obstacle obstacle);
+    public Obstacle getStartingObstacle() {
+        return trackList.get(0);
+    }
 
-    public abstract String getName();
+    public String getName() {
+        return courseName;
+    }
+
+    public int getObstacleIndex(Obstacle obstacle) {
+        return trackList.indexOf(obstacle);
+    }
 
 }

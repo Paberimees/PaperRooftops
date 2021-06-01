@@ -43,12 +43,7 @@ public class GoToStart extends Task<ClientContext> {
             //Not webwalker
             ctx.movement.step(startingArea.getRandomTile());
             Condition.sleep(2000);
-            Condition.wait(new Callable<Boolean>() {
-                @Override
-                public Boolean call() throws Exception {
-                    return !ctx.players.local().inMotion();
-                }
-            }, 250, 120);
+            Condition.wait(()->!ctx.players.local().inMotion(),250,40);
         }
 
         //Check for logging to console.

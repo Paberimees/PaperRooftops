@@ -1,17 +1,9 @@
 package paperrooftops.utility.courses;
 
 import org.powerbot.script.Area;
-import org.powerbot.script.Locatable;
 import org.powerbot.script.Tile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class FaladorRooftop extends Course {
-
-    private String courseName;
-    private int levelRequirement;
-    private List<Obstacle> trackList = new ArrayList<>();
 
     public FaladorRooftop() {
         courseName = "Falador rooftop";
@@ -88,28 +80,5 @@ public class FaladorRooftop extends Course {
                 //defaultBounds3,
                 debug_12,
                 new Area(new Tile(3019, 3335,3), new Tile(3027, 3332, 3)))); //3
-    }
-
-    @Override
-    public Obstacle getCurrentObstacle(Locatable x) {
-        if (trackList.stream().anyMatch((obs) -> obs.getStartArea().containsOrIntersects(x))) {
-            return trackList.stream().filter((obs) -> obs.getStartArea().containsOrIntersects(x)).findFirst().get();
-        }
-        return null;
-    }
-
-    @Override
-    public Obstacle getStartingObstacle() {
-        return trackList.get(0);
-    }
-
-    @Override
-    public String getName() {
-        return courseName;
-    }
-
-    @Override
-    public int getObstacleIndex(Obstacle obstacle) {
-        return trackList.indexOf(obstacle);
     }
 }

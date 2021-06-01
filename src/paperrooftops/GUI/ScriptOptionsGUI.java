@@ -1,13 +1,18 @@
 package paperrooftops.GUI;
 
 import org.powerbot.script.rt4.ClientContext;
+import org.powerbot.script.rt4.Constants;
 import paperrooftops.PaperRooftops;
 import paperrooftops.tasks.*;
+import paperrooftops.utility.GV;
 import paperrooftops.utility.courses.*;
 
 import javax.swing.*;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.net.URL;
+import java.text.NumberFormat;
 
 /*
 Notes:
@@ -19,6 +24,12 @@ public class ScriptOptionsGUI extends JFrame {
     private JButton startButton;
     private JLabel courseHeader;
     private JLabel mainHeader;
+    private JCheckBox eatFoodCheckBox;
+    private JSlider eatFoodSlider;
+    private JLabel eatFoodLabel;
+    private JCheckBox logoutLevelCheckBox;
+    private JLabel logoutLevelLabel;
+    private JFormattedTextField logoutLevelFormattedTextField;
 
     private ClientContext ctx;
     private PaperRooftops main;
@@ -29,6 +40,8 @@ public class ScriptOptionsGUI extends JFrame {
         this.ctx = ctx;
         this.main = main;
 
+        this.setMinimumSize(new Dimension(300, 400));
+        //this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setContentPane(mainPanel);
@@ -39,14 +52,47 @@ public class ScriptOptionsGUI extends JFrame {
     }
 
     private void initialize() {
+        /*this.revalidate();
+        mainPanel.revalidate();
+        this.repaint();
+        mainPanel.repaint();*/
+
         //Course list
         courseList.setSelectedIndex(0);
 
         //Start button
         startButton.addActionListener((event)->finishSetup());
 
-        //Test
-        //System.out.println(main.getClass().getPackageName());
+        //HP Check
+        eatFoodCheckBox.addActionListener((event)->toggleEatFood());
+        eatFoodSlider.setMinimum(1);
+        eatFoodSlider.setMaximum(ctx.skills.realLevel(Constants.SKILLS_HITPOINTS));
+        eatFoodSlider.setMinorTickSpacing(5);
+        eatFoodSlider.setMajorTickSpacing(10);
+        eatFoodSlider.setPaintTicks(true);
+        eatFoodSlider.setPaintLabels(true);
+
+        //Level check
+        logoutLevelCheckBox.addActionListener((event)->toggleLogoutLevel());
+        NumberFormat format = NumberFormat.getInstance();
+        NumberFormatter formatter = new NumberFormatter(format);
+        formatter.setValueClass(Integer.class);
+        //formatter.setMinimum(0);
+        //formatter.setMaximum(99);
+        formatter.setAllowsInvalid(false);
+        formatter.setCommitsOnValidEdit(true);
+        logoutLevelFormattedTextField.setFormatterFactory(new DefaultFormatterFactory(formatter));
+        logoutLevelFormattedTextField.setHorizontalAlignment(logoutLevelFormattedTextField.CENTER);
+    }
+
+    private void toggleEatFood() {
+        eatFoodLabel.setEnabled(eatFoodCheckBox.isSelected());
+        eatFoodSlider.setEnabled(eatFoodCheckBox.isSelected());
+    }
+
+    private void toggleLogoutLevel() {
+        logoutLevelLabel.setEnabled(logoutLevelCheckBox.isSelected());
+        logoutLevelFormattedTextField.setEnabled(logoutLevelCheckBox.isSelected());
     }
 
     private void finishSetup() {
@@ -80,8 +126,19 @@ public class ScriptOptionsGUI extends JFrame {
         }
 
         if (!debugMode) {
-            //Don't need to add the tasks here, but planning to add some options in the future
-            //taskList.add(new CheckHealth(ctx, this));
+            if (logoutLevelCheckBox.isSelected()) {
+                try {
+                    GV.MAX_LEVEL = Integer.parseInt(logoutLevelFormattedTextField.getValue().toString());
+                } catch (Exception e) {
+                    System.out.println("EXCEPTION: " + e);
+                    ctx.controller.stop();
+                }
+                main.addTask(new CheckLevel(ctx, main));
+            }
+            if (eatFoodCheckBox.isSelected()) {
+                GV.HEALTH_MINIMUM = eatFoodSlider.getValue();
+                main.addTask(new CheckHealth(ctx, main));
+            }
             main.addTask(new CloseMenu(ctx, main));
             main.addTask(new TurnOnRun(ctx, main));
             main.addTask(new PickUpMarkOfGrace(ctx, main));

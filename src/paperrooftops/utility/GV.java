@@ -24,7 +24,9 @@ public class GV {
 
     public static int MARK_TILEHEIGHT_DIFF = 0;
 
-    public static int HEALTH_MINIMUM = 8;
+    public static int HEALTH_MINIMUM = 100;
+
+    public static int MAX_LEVEL = 100;
 
     public static void randomizeRunEnergyMinimum() {
         int max = 90;
